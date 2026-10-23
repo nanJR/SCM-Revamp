@@ -29,6 +29,15 @@ pytest
 uvicorn scm.api:app --reload
 ```
 
+On Windows (Command Prompt or PowerShell), skip activation and call the venv's Python directly:
+
+```bat
+cd backend
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -e ".[dev]"
+.venv\Scripts\python.exe -m uvicorn scm.api:app --reload
+```
+
 By default the API uses an in-memory store and needs no keys. Open http://localhost:8000/docs to try the endpoints. The main ones are `POST /api/pipeline/run`, `GET /api/ledger` and `GET /api/decisions`.
 
 ## Run the frontend
