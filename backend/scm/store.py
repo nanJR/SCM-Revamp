@@ -30,7 +30,9 @@ class Store(Protocol):
     def record_sensor(self, facility_id: str, reading: SensorReading) -> None: ...
     def passports(self) -> list[DigitalWastePassport]: ...
     def append_passports(self, blocks: list[DigitalWastePassport]) -> None: ...
-    def record_run(self, items: list[dict[str, Any]], decisions: list[DecisionRecord]) -> str: ...
+    def record_run(
+        self, items: list[dict[str, Any]], decisions: list[DecisionRecord], disposals: list[dict[str, Any]] | None = None
+    ) -> str: ...
     def reset(self) -> None: ...
 
 
@@ -66,10 +68,12 @@ class InMemoryStore:
     def append_passports(self, blocks: list[DigitalWastePassport]) -> None:
         self._passports.extend(blocks)
 
-    def record_run(self, items: list[dict[str, Any]], decisions: list[DecisionRecord]) -> str:
+    def record_run(
+        self, items: list[dict[str, Any]], decisions: list[DecisionRecord], disposals: list[dict[str, Any]] | None = None
+    ) -> str:
         run_id = f"run-{len(self.runs) + 1}"
         rows = [{**d.model_dump(), "run_id": run_id} for d in decisions]
-        self.runs.append({"id": run_id, "items": items, "decisions": rows})
+        self.runs.append({"id": run_id, "items": items, "disposals": disposals or [], "decisions": rows})
         return run_id
 
     def latest_run(self) -> dict[str, Any] | None:
@@ -143,8 +147,13 @@ class SupabaseStore:
         if blocks:
             self._post("passports", [b.model_dump() for b in blocks], prefer="return=minimal")
 
-    def record_run(self, items: list[dict[str, Any]], decisions: list[DecisionRecord]) -> str:
-        run = self._post("pipeline_runs", {"finished_at": datetime.now(timezone.utc).isoformat(), "items": items})[0]
+    def record_run(
+        self, items: list[dict[str, Any]], decisions: list[DecisionRecord], disposals: list[dict[str, Any]] | None = None
+    ) -> str:
+        run = self._post(
+            "pipeline_runs",
+            {"finished_at": datetime.now(timezone.utc).isoformat(), "items": items, "disposals": disposals or []},
+        )[0]
         if decisions:
             self._post(
                 "decision_log", [{"run_id": run["id"], **d.model_dump()} for d in decisions], prefer="return=minimal"
@@ -152,7 +161,7 @@ class SupabaseStore:
         return run["id"]
 
     def latest_run(self) -> dict[str, Any] | None:
-        rows = self._get("pipeline_runs", select="id,items", order="started_at.desc", limit="1")
+        rows = self._get("pipeline_runs", select="id,items,disposals", order="started_at.desc", limit="1")
         return rows[0] if rows else None
 
     def decisions(self, limit: int = 200) -> list[dict[str, Any]]:

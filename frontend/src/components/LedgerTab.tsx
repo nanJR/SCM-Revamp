@@ -205,18 +205,31 @@ export const LedgerTab: React.FC<LedgerTabProps> = ({
                     <span className="font-bold text-foreground font-mono">{p.deal.seller_id}</span>
                   </div>
                   <div>
-                    <span className="text-muted-foreground/70 block text-[10px] font-bold uppercase tracking-wider font-mono">Buyer ID</span>
-                    <span className="font-bold text-foreground font-mono">{p.deal.buyer_id}</span>
+                    <span className="text-muted-foreground/70 block text-[10px] font-bold uppercase tracking-wider font-mono">
+                      {p.deal.type === 'disposal' ? 'Disposal site' : 'Buyer ID'}
+                    </span>
+                    <span className="font-bold text-foreground font-mono">{p.deal.type === 'disposal' ? p.deal.site_id : p.deal.buyer_id}</span>
                   </div>
                   <div>
                     <span className="text-muted-foreground/70 block text-[10px] font-bold uppercase tracking-wider font-mono">Agreed Volume</span>
                     <span className="font-bold text-foreground font-mono">{p.deal.volume_tons} tons/mo</span>
                   </div>
                   <div>
-                    <span className="text-muted-foreground/70 block text-[10px] font-bold uppercase tracking-wider font-mono">Final Price</span>
-                    <span className="font-bold text-emerald-700 dark:text-emerald-300 font-mono text-sm">
-                      ₹{p.deal.agreed_price_per_ton}/ton
-                    </span>
+                    {p.deal.type === 'disposal' ? (
+                      <>
+                        <span className="text-muted-foreground/70 block text-[10px] font-bold uppercase tracking-wider font-mono">Generator pays</span>
+                        <span className="font-bold text-foreground font-mono text-sm">
+                          ₹{p.deal.total_cost_inr?.toLocaleString('en-IN')}
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-muted-foreground/70 block text-[10px] font-bold uppercase tracking-wider font-mono">Final Price</span>
+                        <span className="font-bold text-emerald-700 dark:text-emerald-300 font-mono text-sm">
+                          ₹{p.deal.agreed_price_per_ton}/ton
+                        </span>
+                      </>
+                    )}
                   </div>
                 </div>
 

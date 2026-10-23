@@ -11,7 +11,7 @@ import { LedgerTab } from './components/LedgerTab';
 import { ArchitectureStandardsModal } from './components/ArchitectureStandardsModal';
 import { HonestLimitationsModal } from './components/HonestLimitationsModal';
 import { GlossaryModal } from './components/GlossaryModal';
-import { Carrier, DigitalWastePassport, Facility, LedgerVerification, PipelineItemResult } from './types';
+import { Carrier, DigitalWastePassport, DisposalResult, Facility, LedgerVerification, PipelineItemResult } from './types';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<Tab>(
@@ -25,6 +25,7 @@ export function App() {
   const [facilities, setFacilities] = useState<Record<string, Facility>>({});
   const [carriers, setCarriers] = useState<Record<string, Carrier>>({});
   const [results, setResults] = useState<PipelineItemResult[]>([]);
+  const [disposals, setDisposals] = useState<DisposalResult[]>([]);
   const [passports, setPassports] = useState<DigitalWastePassport[]>([]);
   const [verification, setVerification] = useState<LedgerVerification | null>(null);
   const [hasUserVerified, setHasUserVerified] = useState<boolean>(false);
@@ -55,16 +56,18 @@ export function App() {
   const loadInitialData = async () => {
     try {
       setLoading(true);
-      const [fac, car, res, led, h] = await Promise.all([
+      const [fac, car, res, disp, led, h] = await Promise.all([
         api.facilities(),
         api.carriers(),
         api.results(),
+        api.disposals(),
         api.ledger(),
         api.health(),
       ]);
       setFacilities(fac);
       setCarriers(car);
       setResults(res);
+      setDisposals(disp);
       setPassports(led.passports);
       setVerification(led.verification);
       setHealth(h);
@@ -103,6 +106,7 @@ export function App() {
       const run = await api.runPipeline();
       const led = await api.ledger();
       setResults(run.items);
+      setDisposals(run.disposals);
       setPassports(led.passports);
       setVerification(led.verification);
       setHasUserVerified(false);
@@ -124,6 +128,7 @@ export function App() {
       const [fac, led] = await Promise.all([api.facilities(), api.ledger()]);
       setFacilities(fac);
       setResults([]);
+      setDisposals([]);
       setPassports(led.passports);
       setVerification(led.verification);
       setHasUserVerified(false);
@@ -216,7 +221,7 @@ export function App() {
             )}
 
             {activeTab === 'insights' && (
-              <InsightsTab results={results} onRunPipelineNav={() => setActiveTab('pipeline')} />
+              <InsightsTab results={results} disposals={disposals} onRunPipelineNav={() => setActiveTab('pipeline')} />
             )}
 
             {activeTab === 'audit' && <AuditTab refreshKey={runCount} />}

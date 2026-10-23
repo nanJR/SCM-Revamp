@@ -3,6 +3,7 @@
 import type {
   Carrier,
   DigitalWastePassport,
+  DisposalResult,
   Facility,
   LedgerVerification,
   PipelineItemResult,
@@ -51,8 +52,10 @@ export const api = {
   updateSensor: (facility_id: string, moisture_pct: number, contamination_flag: boolean) =>
     post<Facility>('/api/facilities/sensor', { facility_id, moisture_pct, contamination_flag }),
   describeFacility: (id: string) => post<{ id: string; description: string }>(`/api/facilities/${id}/describe`),
-  runPipeline: () => post<{ run_id: string | null; items: PipelineItemResult[]; minted: number }>('/api/pipeline/run'),
+  runPipeline: () =>
+    post<{ run_id: string | null; items: PipelineItemResult[]; disposals: DisposalResult[]; minted: number }>('/api/pipeline/run'),
   results: () => call<PipelineItemResult[]>('/api/pipeline/results'),
+  disposals: () => call<DisposalResult[]>('/api/disposals'),
   decisions: (limit = 200) => call<DecisionRecord[]>(`/api/decisions?limit=${limit}`),
   ledger: () => call<{ passports: DigitalWastePassport[]; verification: LedgerVerification }>('/api/ledger'),
   verifyLedger: () => call<LedgerVerification>('/api/ledger/verify'),
