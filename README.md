@@ -67,6 +67,28 @@ To turn on real accounts, run `cp .env.example .env.local` in `frontend/` and re
 
 Supabase asks new users to confirm their email by default. For local testing, you can turn that off in the Supabase dashboard under **Authentication → Sign In / Providers → Email**.
 
+### Locking the API to signed-in users
+
+By default the API trusts every caller as an admin, which is what the local demo needs. To make it check Supabase sign-in, start the backend with:
+
+```powershell
+$env:SCM_AUTH="required"
+$env:SUPABASE_URL="https://oddtwtutmevpbgekqpzf.supabase.co"
+$env:SUPABASE_PUBLISHABLE_KEY="sb_publishable_..."   # same key as frontend/.env.example
+```
+
+The frontend sends the signed-in user's access token, and `scm/auth.py` verifies it against the project's published signing keys. It then reads the user's role and linked facility or fleet from `profiles`, using the user's own token so row-level security still applies. `scm/scope.py` cuts each response down to that role:
+
+| Caller | Deals, disposals and passports | Price floors and ceilings | Can do |
+| --- | --- | --- | --- |
+| Signed out | None | Hidden | Read the directory, verify the ledger |
+| Seller or buyer | Only the ones their facility is party to, including pooled lots | Only their own | Report sensor readings for their own facility, register a new facility of their own kind, ask for a description |
+| Carrier | Only trips they haul | Hidden | Ask for a description |
+| Regulator | Everything | All | Run matching, read the audit log |
+| Admin | Everything | All | Everything, including reset |
+
+Ledger verification always checks the whole chain, even when only some passports are returned. If your project still signs tokens with the legacy HS256 secret, also set `SUPABASE_JWT_SECRET`. To make yourself an admin, change your row in `profiles` in the Supabase dashboard.
+
 ## Environment variables
 
 | Variable | Default | Meaning |
@@ -77,6 +99,9 @@ Supabase asks new users to confirm their email by default. For local testing, yo
 | `SCM_LLM_PROVIDER` | `none` | `groq`, `gemini`, `openrouter` or `none` |
 | `GROQ_API_KEY` / `GEMINI_API_KEY` / `OPENROUTER_API_KEY` | | The key for the provider you picked |
 | `SCM_LLM_MODEL` | provider default | Use this to override the model |
+| `SCM_AUTH` | `off` | Set to `required` to check Supabase sign-in on every request |
+| `SUPABASE_PUBLISHABLE_KEY` | | Needed with `SCM_AUTH=required`, to read the caller's profile |
+| `SUPABASE_JWT_SECRET` | | Only for projects still on the legacy HS256 signing secret |
 | `SCM_CORS_ORIGINS` | `http://localhost:5173` | Comma-separated list of frontend origins |
 
 ### Free LLM key
