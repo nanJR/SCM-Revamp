@@ -1,0 +1,1019 @@
+{
+  "clusters": {
+    "Peenya": [
+      13.028,
+      77.52
+    ],
+    "Bidadi": [
+      12.794,
+      77.389
+    ],
+    "Dobaspet": [
+      13.22,
+      77.33
+    ],
+    "Harohalli": [
+      12.655,
+      77.43
+    ],
+    "Tumkur": [
+      13.34,
+      77.1
+    ],
+    "Whitefield": [
+      12.97,
+      77.7
+    ],
+    "Yelahanka": [
+      13.1,
+      77.58
+    ],
+    "Chikkajala": [
+      13.175,
+      77.63
+    ]
+  },
+  "caaqms": {
+    "PEENYA_NTTF": {
+      "id": "PEENYA_NTTF",
+      "name": "NTTF, Peenya Industrial Area (CAAQMS-11)",
+      "zoneType": "Industrial",
+      "pm10": 64.2,
+      "pm25": 28.1,
+      "so2": 5.5,
+      "no2": 14.8,
+      "aqi_category": "Satisfactory"
+    },
+    "SILK_BOARD": {
+      "id": "SILK_BOARD",
+      "name": "HSR Layout / Central Silk Board Flyover (CAAQMS-7)",
+      "zoneType": "Kerbside",
+      "pm10": 92,
+      "pm25": 36.1,
+      "so2": 6.2,
+      "no2": 20,
+      "aqi_category": "Moderate"
+    },
+    "MYSORE_ROAD_RVCE": {
+      "id": "MYSORE_ROAD_RVCE",
+      "name": "RV College of Engineering, Mysore Road (CAAQMS-9)",
+      "zoneType": "Sensitive",
+      "pm10": 84.6,
+      "pm25": 36.5,
+      "so2": 5.5,
+      "no2": 16.8,
+      "aqi_category": "Moderate"
+    },
+    "CITY_RAILWAY": {
+      "id": "CITY_RAILWAY",
+      "name": "City Railway Station, Majestic (CAAQMS-1)",
+      "zoneType": "Commercial",
+      "pm10": 71.9,
+      "pm25": 34,
+      "so2": 16.8,
+      "no2": 27.5,
+      "aqi_category": "Satisfactory"
+    },
+    "HEBBAL": {
+      "id": "HEBBAL",
+      "name": "Veterinary College, Hebbal (CAAQMS-3)",
+      "zoneType": "Sensitive",
+      "pm10": 62.9,
+      "pm25": 30.5,
+      "so2": 11.5,
+      "no2": 10.8,
+      "aqi_category": "Satisfactory"
+    },
+    "WHITEFIELD": {
+      "id": "WHITEFIELD",
+      "name": "Graphite India, EPIP Whitefield (KSPCB-Manual-1)",
+      "zoneType": "Industrial",
+      "pm10": 67,
+      "pm25": 27,
+      "so2": 2,
+      "no2": 22,
+      "aqi_category": "Satisfactory"
+    }
+  },
+  "taxonomy": {
+    "chrome_sludge": {
+      "category": "hazardous_metal_waste",
+      "hazard": true,
+      "standardNote": "HW Rules 2016 Sched. II: Requires KSPCB authorized CETP (VIWA) or TSDF (KWMP Dabaspet).",
+      "hsnCode": "2620",
+      "defaultGstRate": 18
+    },
+    "used_oil": {
+      "category": "hazardous_liquid_waste",
+      "hazard": true,
+      "standardNote": "HW Rules 2016 Sched. IV: Authorized reregistration under CPCB EPR portal.",
+      "hsnCode": "2710",
+      "defaultGstRate": 18
+    },
+    "metal_scrap": {
+      "category": "recyclable_metal",
+      "hazard": false,
+      "standardNote": "Secondary metallurgy & foundry charge (over 80% scrap recycling parity in India).",
+      "hsnCode": "7204",
+      "defaultGstRate": 18
+    },
+    "fly_ash": {
+      "category": "combustion_byproduct",
+      "hazard": false,
+      "standardNote": "MoEFCC SO 5481(E): 100% ash utilization mandate for cement, RMC, and bricks within 300km.",
+      "hsnCode": "2621",
+      "defaultGstRate": 5
+    },
+    "steel_slag": {
+      "category": "metallurgical_byproduct",
+      "hazard": false,
+      "standardNote": "IRC & NBC Part 11: Granular Sub-Base (GSB) replacement for civil road infrastructure.",
+      "hsnCode": "2619",
+      "defaultGstRate": 18
+    },
+    "dye_sludge": {
+      "category": "hazardous_chemical_waste",
+      "hazard": true,
+      "standardNote": "KSPCB Water/Air Act Consent: Common Effluent Treatment Plant (CETP) disposal manifest required.",
+      "hsnCode": "3825",
+      "defaultGstRate": 18
+    },
+    "plastic_scrap": {
+      "category": "recyclable_plastic",
+      "hazard": false,
+      "standardNote": "Plastic Waste Management Rules 2016 (EPR portal registered PIBOs & PWPs).",
+      "hsnCode": "3915",
+      "defaultGstRate": 18
+    },
+    "rubber_waste": {
+      "category": "recyclable_rubber",
+      "hazard": false,
+      "standardNote": "Pyrolysis / crumb rubber modifier for bituminous pavements.",
+      "hsnCode": "4004",
+      "defaultGstRate": 18
+    },
+    "recycled_concrete_aggregate": {
+      "category": "construction_demolition_waste",
+      "hazard": false,
+      "standardNote": "CPCB 2017 & BIS IS:383:2016: Recycled Concrete Aggregate (up to 20% in RCC M25; 100% in lean concrete).",
+      "hsnCode": "6810",
+      "defaultGstRate": 5
+    }
+  },
+  "carriers": {
+    "CAR01": {
+      "id": "CAR01",
+      "name": "Namma Fleet Movers (Peenya)",
+      "cluster": "Peenya",
+      "lat": 13.028,
+      "lon": 77.52,
+      "vehicle_type": "Mini Truck (Tata Ace)",
+      "capacity_tons": 5,
+      "rate_floor_inr_per_ton_km": 4.5,
+      "hazmat_transport_license": false
+    },
+    "CAR02": {
+      "id": "CAR02",
+      "name": "Bengaluru Bulk Carriers (Dobaspet)",
+      "cluster": "Dobaspet",
+      "lat": 13.22,
+      "lon": 77.33,
+      "vehicle_type": "10-Wheeler Truck",
+      "capacity_tons": 40,
+      "rate_floor_inr_per_ton_km": 3.2,
+      "hazmat_transport_license": false
+    },
+    "CAR03": {
+      "id": "CAR03",
+      "name": "Swasthik Tippers & Logistics (Harohalli)",
+      "cluster": "Harohalli",
+      "lat": 12.655,
+      "lon": 77.43,
+      "vehicle_type": "Tipper Trailer",
+      "capacity_tons": 80,
+      "rate_floor_inr_per_ton_km": 2.6,
+      "hazmat_transport_license": false
+    },
+    "CAR04": {
+      "id": "CAR04",
+      "name": "VaruTrans Hazmat Carriers (Bidadi)",
+      "cluster": "Bidadi",
+      "lat": 12.794,
+      "lon": 77.389,
+      "vehicle_type": "Bulk Tanker",
+      "capacity_tons": 15,
+      "rate_floor_inr_per_ton_km": 30,
+      "hazmat_transport_license": true
+    },
+    "CAR05": {
+      "id": "CAR05",
+      "name": "Kaveri Heavy Haulage (Whitefield)",
+      "cluster": "Whitefield",
+      "lat": 12.97,
+      "lon": 77.7,
+      "vehicle_type": "10-Wheeler Truck",
+      "capacity_tons": 300,
+      "rate_floor_inr_per_ton_km": 1.8,
+      "hazmat_transport_license": false
+    }
+  },
+  "facilities": {
+    "F01": {
+      "id": "F01",
+      "name": "Sri Lakshmi Electroplating Works (Peenya)",
+      "cluster": "Peenya",
+      "lat": 13.0285,
+      "lon": 77.5215,
+      "role": "seller",
+      "material": "chrome_sludge",
+      "material_category": "hazardous_metal_waste",
+      "hazardous": true,
+      "volume_tons_per_month": 6.5,
+      "cost_floor_inr_per_ton": 1200,
+      "cost_ceiling_inr_per_ton": null,
+      "certified_hazard_handler": false,
+      "kspcb_consent_id": "KSPCB/XGN/PEE/2023/RED-0842",
+      "consent_type": "Red-CFO",
+      "cepi_zone": "Peenya (CEPI: 78.12 Critically Polluted Area)",
+      "nearest_caaqms": "PEENYA_NTTF",
+      "gstin": "29AAECS4912L1ZF",
+      "xgn_details": {
+        "consent_id": "KSPCB/XGN/PEE/2023/RED-0842",
+        "consent_type": "Red-CFO",
+        "valid_till": "2027-06-30",
+        "is_active": true,
+        "authorized_monthly_quota_tons": 10,
+        "current_month_consumed_tons": 2,
+        "cepi_score": 78.12
+      },
+      "lab_assay": {
+        "certificate_id": "NABL-CR-2026-0419",
+        "lab_name": "Bangalore Test House (NABL Accredited TC-5812)",
+        "sample_date": "2026-08-18",
+        "batch_id": "BAT-CR-882",
+        "parameters": [
+          {
+            "name": "Total Chromium",
+            "unit": "%",
+            "value": 14.2,
+            "test_standard": "IS:3025 (Part 52)",
+            "status": "COMPLIANT"
+          },
+          {
+            "name": "Hexavalent Cr (Cr6+)",
+            "unit": "ppm",
+            "value": 3.2,
+            "test_standard": "EPA 7196A",
+            "tolerance_max": 5,
+            "status": "COMPLIANT"
+          },
+          {
+            "name": "Moisture Content",
+            "unit": "%",
+            "value": 21.5,
+            "test_standard": "ASTM D2216",
+            "tolerance_max": 25,
+            "status": "COMPLIANT"
+          },
+          {
+            "name": "TCLP Leachability",
+            "unit": "mg/L",
+            "value": 4.1,
+            "test_standard": "USEPA 1311",
+            "tolerance_max": 5,
+            "status": "COMPLIANT"
+          }
+        ],
+        "overall_grade": "Category 34.3 KSPCB Metal Finishing Sludge",
+        "usable_in_production": true
+      }
+    },
+    "F02": {
+      "id": "F02",
+      "name": "AMCO Batteries Limited (Mysore Road)",
+      "cluster": "Peenya",
+      "lat": 12.952,
+      "lon": 77.541,
+      "role": "seller",
+      "material": "used_oil",
+      "material_category": "hazardous_liquid_waste",
+      "hazardous": true,
+      "volume_tons_per_month": 3.8,
+      "cost_floor_inr_per_ton": 850,
+      "cost_ceiling_inr_per_ton": null,
+      "certified_hazard_handler": false,
+      "kspcb_consent_id": "KSPCB/XGN/MYS/2022/RED-1104",
+      "consent_type": "Red-CFO",
+      "nearest_caaqms": "MYSORE_ROAD_RVCE",
+      "gstin": "29AAACA2019N1ZV",
+      "xgn_details": {
+        "consent_id": "KSPCB/XGN/MYS/2022/RED-1104",
+        "consent_type": "Red-CFO",
+        "valid_till": "2028-03-31",
+        "is_active": true,
+        "authorized_monthly_quota_tons": 8,
+        "current_month_consumed_tons": 3.1
+      },
+      "lab_assay": {
+        "certificate_id": "NABL-OIL-2026-1102",
+        "lab_name": "SGS India Environmental Labs (Peenya)",
+        "sample_date": "2026-08-25",
+        "batch_id": "AMCO-LUBE-904",
+        "parameters": [
+          {
+            "name": "Flash Point (Pensky-Martens)",
+            "unit": "°C",
+            "value": 164,
+            "test_standard": "ASTM D93",
+            "tolerance_min": 130,
+            "status": "COMPLIANT"
+          },
+          {
+            "name": "Water Content",
+            "unit": "%",
+            "value": 0.75,
+            "test_standard": "ASTM D95",
+            "tolerance_max": 1.5,
+            "status": "COMPLIANT"
+          },
+          {
+            "name": "Sediment / Insoluble Solids",
+            "unit": "%",
+            "value": 0.14,
+            "test_standard": "ASTM D473",
+            "tolerance_max": 0.25,
+            "status": "COMPLIANT"
+          },
+          {
+            "name": "Polychlorinated Biphenyls (PCBs)",
+            "unit": "ppm",
+            "value": 1.1,
+            "test_standard": "EPA 8082",
+            "tolerance_max": 2,
+            "status": "COMPLIANT"
+          }
+        ],
+        "overall_grade": "Schedule IV Re-refinable Industrial Grade A",
+        "usable_in_production": true
+      }
+    },
+    "F03": {
+      "id": "F03",
+      "name": "Ace Designers Ltd. (Peenya Phase II)",
+      "cluster": "Peenya",
+      "lat": 13.0275,
+      "lon": 77.518,
+      "role": "seller",
+      "material": "metal_scrap",
+      "material_category": "recyclable_metal",
+      "hazardous": false,
+      "volume_tons_per_month": 28,
+      "cost_floor_inr_per_ton": 1800,
+      "cost_ceiling_inr_per_ton": null,
+      "certified_hazard_handler": false,
+      "kspcb_consent_id": "KSPCB/XGN/PEE/2023/ORG-4421",
+      "consent_type": "Orange-CFO",
+      "nearest_caaqms": "PEENYA_NTTF",
+      "gstin": "29AAACA1092M1ZN",
+      "xgn_details": {
+        "consent_id": "KSPCB/XGN/PEE/2023/ORG-4421",
+        "consent_type": "Orange-CFO",
+        "valid_till": "2027-12-31",
+        "is_active": true,
+        "authorized_monthly_quota_tons": 50,
+        "current_month_consumed_tons": 15
+      },
+      "lab_assay": {
+        "certificate_id": "MET-ACE-2026-771",
+        "lab_name": "Metal Craft Metallurgical Testing Services (Peenya)",
+        "sample_date": "2026-08-30",
+        "batch_id": "ACE-CNC-BORINGS-08",
+        "parameters": [
+          {
+            "name": "Ferrous Purity (Fe)",
+            "unit": "%",
+            "value": 96.2,
+            "test_standard": "IS:228 Optical Emission",
+            "tolerance_min": 92,
+            "status": "COMPLIANT"
+          },
+          {
+            "name": "Cutting Coolant Residue",
+            "unit": "%",
+            "value": 0.8,
+            "test_standard": "IS:2549 Soxhlet",
+            "tolerance_max": 2,
+            "status": "COMPLIANT"
+          },
+          {
+            "name": "Non-Metallic Inclusions",
+            "unit": "%",
+            "value": 0.5,
+            "test_standard": "ASTM E45",
+            "tolerance_max": 1.5,
+            "status": "COMPLIANT"
+          }
+        ],
+        "overall_grade": "IS:2549 Grade 1 Heavy Melting Turning Scrap",
+        "usable_in_production": true
+      }
+    },
+    "F04": {
+      "id": "F04",
+      "name": "KPCL Thermal Ash Depot (Dobaspet Node)",
+      "cluster": "Dobaspet",
+      "lat": 13.2215,
+      "lon": 77.3305,
+      "role": "seller",
+      "material": "fly_ash",
+      "material_category": "combustion_byproduct",
+      "hazardous": false,
+      "volume_tons_per_month": 120,
+      "cost_floor_inr_per_ton": 600,
+      "cost_ceiling_inr_per_ton": null,
+      "certified_hazard_handler": false,
+      "kspcb_consent_id": "MoEFCC/SO-5481-E/KPCL-2023",
+      "consent_type": "Orange-CFO",
+      "nearest_caaqms": "PEENYA_NTTF",
+      "gstin": "29AAACK3921E1Z3",
+      "xgn_details": {
+        "consent_id": "MoEFCC/SO-5481-E/KPCL-2023",
+        "consent_type": "Orange-CFO",
+        "valid_till": "2029-12-31",
+        "is_active": true,
+        "authorized_monthly_quota_tons": 500,
+        "current_month_consumed_tons": 220
+      },
+      "lab_assay": {
+        "certificate_id": "ASH-KPCL-2026-081",
+        "lab_name": "National Council for Cement & Building Materials (NCB Ballabgarh/BLR)",
+        "sample_date": "2026-09-02",
+        "batch_id": "KPCL-SILO-04",
+        "parameters": [
+          {
+            "name": "Loss on Ignition (LOI)",
+            "unit": "%",
+            "value": 3.2,
+            "test_standard": "IS:3812 (Part 1)",
+            "tolerance_max": 5,
+            "status": "COMPLIANT"
+          },
+          {
+            "name": "Fineness (Blaine Air Permeability)",
+            "unit": "m²/kg",
+            "value": 345,
+            "test_standard": "IS:4031 (Part 2)",
+            "tolerance_min": 320,
+            "status": "COMPLIANT"
+          },
+          {
+            "name": "Total Reactive Silica + Alumina",
+            "unit": "%",
+            "value": 78.4,
+            "test_standard": "IS:1727 XRF",
+            "tolerance_min": 70,
+            "status": "COMPLIANT"
+          },
+          {
+            "name": "Moisture Content",
+            "unit": "%",
+            "value": 0.6,
+            "test_standard": "IS:3812 Gravimetric",
+            "tolerance_max": 2,
+            "status": "COMPLIANT"
+          }
+        ],
+        "overall_grade": "IS:3812 Grade 1 Siliceous Clinker-Substitution Pulverized Ash",
+        "usable_in_production": true
+      }
+    },
+    "F05": {
+      "id": "F05",
+      "name": "JSW Steel Processing Facility (Harohalli)",
+      "cluster": "Harohalli",
+      "lat": 12.654,
+      "lon": 77.432,
+      "role": "seller",
+      "material": "steel_slag",
+      "material_category": "metallurgical_byproduct",
+      "hazardous": false,
+      "volume_tons_per_month": 55,
+      "cost_floor_inr_per_ton": 3400,
+      "cost_ceiling_inr_per_ton": null,
+      "certified_hazard_handler": false,
+      "kspcb_consent_id": "KSPCB/XGN/HAR/2023/RED-9021",
+      "consent_type": "Red-CFO",
+      "nearest_caaqms": "SILK_BOARD",
+      "gstin": "29AAACJ3919P1ZE",
+      "xgn_details": {
+        "consent_id": "KSPCB/XGN/HAR/2023/RED-9021",
+        "consent_type": "Red-CFO",
+        "valid_till": "2027-09-30",
+        "is_active": true,
+        "authorized_monthly_quota_tons": 200,
+        "current_month_consumed_tons": 90
+      },
+      "lab_assay": {
+        "certificate_id": "SLAG-JSW-2026-90",
+        "lab_name": "Toranagallu Central Metallurgy Assay Lab",
+        "sample_date": "2026-08-20",
+        "batch_id": "JSW-EAF-SLAG-11",
+        "parameters": [
+          {
+            "name": "Free Lime (Free CaO)",
+            "unit": "%",
+            "value": 3.1,
+            "test_standard": "IRC:SP:121",
+            "tolerance_max": 4,
+            "status": "COMPLIANT"
+          },
+          {
+            "name": "Aggregate Impact Value (AIV)",
+            "unit": "%",
+            "value": 21.4,
+            "test_standard": "IS:2386 (Part 4)",
+            "tolerance_max": 24,
+            "status": "COMPLIANT"
+          },
+          {
+            "name": "California Bearing Ratio (CBR)",
+            "unit": "%",
+            "value": 142,
+            "test_standard": "IS:2720 (Part 16)",
+            "tolerance_min": 100,
+            "status": "COMPLIANT"
+          }
+        ],
+        "overall_grade": "IRC:SP:121 Granular Sub-Base Highway Pavement Spec",
+        "usable_in_production": true
+      }
+    },
+    "F06": {
+      "id": "F06",
+      "name": "Swan Silk Ltd. (Peenya Phase III)",
+      "cluster": "Peenya",
+      "lat": 13.026,
+      "lon": 77.524,
+      "role": "seller",
+      "material": "dye_sludge",
+      "material_category": "hazardous_chemical_waste",
+      "hazardous": true,
+      "volume_tons_per_month": 8,
+      "cost_floor_inr_per_ton": 1500,
+      "cost_ceiling_inr_per_ton": null,
+      "certified_hazard_handler": false,
+      "kspcb_consent_id": "KSPCB/XGN/PEE/2021/RED-3912",
+      "consent_type": "Red-CFO",
+      "cepi_zone": "Peenya (CEPI: 78.12 Critically Polluted Area)",
+      "nearest_caaqms": "PEENYA_NTTF",
+      "gstin": "29AAACS3109B1ZA",
+      "xgn_details": {
+        "consent_id": "KSPCB/XGN/PEE/2021/RED-3912",
+        "consent_type": "Red-CFO",
+        "valid_till": "2025-11-30",
+        "is_active": false,
+        "authorized_monthly_quota_tons": 12,
+        "current_month_consumed_tons": 11.5
+      }
+    },
+    "F07": {
+      "id": "F07",
+      "name": "Toyota Kirloskar Auto Parts (Bidadi)",
+      "cluster": "Bidadi",
+      "lat": 12.7935,
+      "lon": 77.3905,
+      "role": "seller",
+      "material": "plastic_scrap",
+      "material_category": "recyclable_plastic",
+      "hazardous": false,
+      "volume_tons_per_month": 18,
+      "cost_floor_inr_per_ton": 1400,
+      "cost_ceiling_inr_per_ton": null,
+      "certified_hazard_handler": false,
+      "kspcb_consent_id": "KSPCB/XGN/BID/2023/ORG-5510",
+      "consent_type": "Orange-CFO",
+      "nearest_caaqms": "MYSORE_ROAD_RVCE",
+      "gstin": "29AAACT2727Q1ZT",
+      "xgn_details": {
+        "consent_id": "KSPCB/XGN/BID/2023/ORG-5510",
+        "consent_type": "Orange-CFO",
+        "valid_till": "2028-09-30",
+        "is_active": true,
+        "authorized_monthly_quota_tons": 40,
+        "current_month_consumed_tons": 14
+      },
+      "lab_assay": {
+        "certificate_id": "POLY-TKAP-2026-44",
+        "lab_name": "CIPET: IPT Bengaluru (Hebbal)",
+        "sample_date": "2026-08-28",
+        "batch_id": "TKAP-PP-TRIM-08",
+        "parameters": [
+          {
+            "name": "Melt Flow Index (MFI)",
+            "unit": "g/10min",
+            "value": 12.5,
+            "test_standard": "ASTM D1238",
+            "tolerance_min": 8,
+            "tolerance_max": 18,
+            "status": "COMPLIANT"
+          },
+          {
+            "name": "Polypropylene Polymer Purity",
+            "unit": "%",
+            "value": 98.4,
+            "test_standard": "FTIR Spectroscopy",
+            "tolerance_min": 95,
+            "status": "COMPLIANT"
+          },
+          {
+            "name": "Ash / Filler Content",
+            "unit": "%",
+            "value": 1.2,
+            "test_standard": "ASTM D5630",
+            "tolerance_max": 3,
+            "status": "COMPLIANT"
+          }
+        ],
+        "overall_grade": "Engineering Automotive PP/EPDM Thermoplastic Regrind",
+        "usable_in_production": true
+      }
+    },
+    "F08": {
+      "id": "F08",
+      "name": "BMRCL Metro Infrastructure Works (Whitefield)",
+      "cluster": "Whitefield",
+      "lat": 12.975,
+      "lon": 77.712,
+      "role": "seller",
+      "material": "recycled_concrete_aggregate",
+      "material_category": "construction_demolition_waste",
+      "hazardous": false,
+      "volume_tons_per_month": 250,
+      "cost_floor_inr_per_ton": 450,
+      "cost_ceiling_inr_per_ton": null,
+      "certified_hazard_handler": false,
+      "kspcb_consent_id": "KSPCB/CDW/RERA/2023/BLR-0235",
+      "consent_type": "C&D-Auth",
+      "nearest_caaqms": "WHITEFIELD",
+      "gstin": "29AAAGB2319K1Z5",
+      "xgn_details": {
+        "consent_id": "KSPCB/CDW/RERA/2023/BLR-0235",
+        "consent_type": "C&D-Auth",
+        "valid_till": "2027-10-31",
+        "is_active": true,
+        "authorized_monthly_quota_tons": 600,
+        "current_month_consumed_tons": 180
+      },
+      "lab_assay": {
+        "certificate_id": "RCA-BMRCL-2026-99",
+        "lab_name": "Civil Engineering Testing Laboratory (UVCE Bengaluru)",
+        "sample_date": "2026-09-01",
+        "batch_id": "BMRCL-PIER-CRUSH-03",
+        "parameters": [
+          {
+            "name": "Aggregate Crushing Value (ACV)",
+            "unit": "%",
+            "value": 26.2,
+            "test_standard": "IS:2386 (Part 4)",
+            "tolerance_max": 30,
+            "status": "COMPLIANT"
+          },
+          {
+            "name": "Water Absorption (24hr)",
+            "unit": "%",
+            "value": 3.8,
+            "test_standard": "IS:2386 (Part 3)",
+            "tolerance_max": 5,
+            "status": "COMPLIANT"
+          },
+          {
+            "name": "Deleterious Materials (Clay/Silt)",
+            "unit": "%",
+            "value": 0.6,
+            "test_standard": "IS:383:2016 Clause 5.2",
+            "tolerance_max": 1,
+            "status": "COMPLIANT"
+          },
+          {
+            "name": "Specific Gravity",
+            "unit": "g/cm³",
+            "value": 2.54,
+            "test_standard": "IS:2386 (Part 3)",
+            "tolerance_min": 2.4,
+            "status": "COMPLIANT"
+          }
+        ],
+        "overall_grade": "BIS IS:383:2016 Recycled Concrete Aggregate (Grade 1)",
+        "usable_in_production": true
+      }
+    },
+    "F09": {
+      "id": "F09",
+      "name": "Namma Ready-Mix Concrete (Peenya Suburb)",
+      "cluster": "Peenya",
+      "lat": 13.029,
+      "lon": 77.519,
+      "role": "buyer",
+      "material": "steel_slag",
+      "material_category": "metallurgical_byproduct",
+      "hazardous": false,
+      "volume_tons_per_month": 60,
+      "cost_floor_inr_per_ton": null,
+      "cost_ceiling_inr_per_ton": 1900,
+      "certified_hazard_handler": false,
+      "kspcb_consent_id": "KSPCB/XGN/PEE/2022/GRN-3012",
+      "consent_type": "Green-CFO",
+      "nearest_caaqms": "PEENYA_NTTF",
+      "gstin": "29AABCN9812J1ZR",
+      "quality_requirements": {
+        "min_acv_pct": 25
+      },
+      "xgn_details": {
+        "consent_id": "KSPCB/XGN/PEE/2022/GRN-3012",
+        "consent_type": "Green-CFO",
+        "valid_till": "2028-05-31",
+        "is_active": true,
+        "authorized_monthly_quota_tons": 100,
+        "current_month_consumed_tons": 35
+      }
+    },
+    "F10": {
+      "id": "F10",
+      "name": "Ultratech Cement (Rajashree Works Blending Depot)",
+      "cluster": "Dobaspet",
+      "lat": 13.2215,
+      "lon": 77.3315,
+      "role": "buyer",
+      "material": "fly_ash",
+      "material_category": "combustion_byproduct",
+      "hazardous": false,
+      "volume_tons_per_month": 150,
+      "cost_floor_inr_per_ton": null,
+      "cost_ceiling_inr_per_ton": 1200,
+      "certified_hazard_handler": false,
+      "kspcb_consent_id": "KSPCB/COP/SED/2023/ORG-0156",
+      "consent_type": "Orange-CFO",
+      "nearest_caaqms": "PEENYA_NTTF",
+      "gstin": "29AAACU0391H1Z9",
+      "quality_requirements": {
+        "max_loi_pct": 5,
+        "max_moisture_pct": 2
+      },
+      "xgn_details": {
+        "consent_id": "KSPCB/COP/SED/2023/ORG-0156",
+        "consent_type": "Orange-CFO",
+        "valid_till": "2029-08-31",
+        "is_active": true,
+        "authorized_monthly_quota_tons": 400,
+        "current_month_consumed_tons": 180
+      }
+    },
+    "F11": {
+      "id": "F11",
+      "name": "Rail Wheel Factory (Indian Railways, Yelahanka)",
+      "cluster": "Yelahanka",
+      "lat": 13.102,
+      "lon": 77.584,
+      "role": "buyer",
+      "material": "metal_scrap",
+      "material_category": "recyclable_metal",
+      "hazardous": false,
+      "volume_tons_per_month": 35,
+      "cost_floor_inr_per_ton": null,
+      "cost_ceiling_inr_per_ton": 3200,
+      "certified_hazard_handler": false,
+      "kspcb_consent_id": "KSPCB/AIR/YEL/2023/RED-0088",
+      "consent_type": "Red-CFO",
+      "nearest_caaqms": "HEBBAL",
+      "gstin": "29AAAGR0291D1ZQ",
+      "xgn_details": {
+        "consent_id": "KSPCB/AIR/YEL/2023/RED-0088",
+        "consent_type": "Red-CFO",
+        "valid_till": "2028-11-30",
+        "is_active": true,
+        "authorized_monthly_quota_tons": 120,
+        "current_month_consumed_tons": 45
+      }
+    },
+    "F12": {
+      "id": "F12",
+      "name": "Century Refineries Pvt. Ltd. (Hoskote)",
+      "cluster": "Tumkur",
+      "lat": 13.341,
+      "lon": 77.098,
+      "role": "buyer",
+      "material": "plastic_scrap",
+      "material_category": "recyclable_plastic",
+      "hazardous": false,
+      "volume_tons_per_month": 25,
+      "cost_floor_inr_per_ton": null,
+      "cost_ceiling_inr_per_ton": 2500,
+      "certified_hazard_handler": false,
+      "kspcb_consent_id": "KSPCB/PWM/EPR/2023/PWP-0094",
+      "consent_type": "Orange-CFO",
+      "nearest_caaqms": "CITY_RAILWAY",
+      "gstin": "29AAACC8819L1ZU",
+      "xgn_details": {
+        "consent_id": "KSPCB/PWM/EPR/2023/PWP-0094",
+        "consent_type": "Orange-CFO",
+        "valid_till": "2027-04-30",
+        "is_active": true,
+        "authorized_monthly_quota_tons": 80,
+        "current_month_consumed_tons": 22
+      }
+    },
+    "F13": {
+      "id": "F13",
+      "name": "VIWA Eco-Club CETP (Veerasandra / Anekal)",
+      "cluster": "Bidadi",
+      "lat": 12.795,
+      "lon": 77.387,
+      "role": "buyer",
+      "material": "chrome_sludge",
+      "material_category": "hazardous_metal_waste",
+      "hazardous": true,
+      "volume_tons_per_month": 8,
+      "cost_floor_inr_per_ton": null,
+      "cost_ceiling_inr_per_ton": 2200,
+      "certified_hazard_handler": true,
+      "kspcb_consent_id": "KSPCB/CETP/HOS/2023/RED-0020",
+      "consent_type": "Red-CFO",
+      "nearest_caaqms": "SILK_BOARD",
+      "gstin": "29AAABV9912C1Z4",
+      "xgn_details": {
+        "consent_id": "KSPCB/CETP/HOS/2023/RED-0020",
+        "consent_type": "Red-CFO",
+        "valid_till": "2028-12-31",
+        "is_active": true,
+        "authorized_monthly_quota_tons": 35,
+        "current_month_consumed_tons": 14.5
+      }
+    },
+    "F14": {
+      "id": "F14",
+      "name": "Haat Incinerator India Pvt. Ltd. (Anekal)",
+      "cluster": "Peenya",
+      "lat": 13.0275,
+      "lon": 77.521,
+      "role": "buyer",
+      "material": "used_oil",
+      "material_category": "hazardous_liquid_waste",
+      "hazardous": true,
+      "volume_tons_per_month": 5,
+      "cost_floor_inr_per_ton": null,
+      "cost_ceiling_inr_per_ton": 2100,
+      "certified_hazard_handler": true,
+      "kspcb_consent_id": "KSPCB/HWM/ANE/2023/RED-1800",
+      "consent_type": "Red-CFO",
+      "nearest_caaqms": "PEENYA_NTTF",
+      "gstin": "29AAACH4821N1ZM",
+      "quality_requirements": {
+        "min_flash_point_c": 130
+      },
+      "xgn_details": {
+        "consent_id": "KSPCB/HWM/ANE/2023/RED-1800",
+        "consent_type": "Red-CFO",
+        "valid_till": "2027-11-30",
+        "is_active": true,
+        "authorized_monthly_quota_tons": 25,
+        "current_month_consumed_tons": 7.2
+      }
+    },
+    "F15": {
+      "id": "F15",
+      "name": "Informal Metal Reclaimers (Gangammana Gudi)",
+      "cluster": "Peenya",
+      "lat": 13.038,
+      "lon": 77.53,
+      "role": "buyer",
+      "material": "chrome_sludge",
+      "material_category": "hazardous_metal_waste",
+      "hazardous": true,
+      "volume_tons_per_month": 10,
+      "cost_floor_inr_per_ton": null,
+      "cost_ceiling_inr_per_ton": 2600,
+      "certified_hazard_handler": false,
+      "nearest_caaqms": "PEENYA_NTTF",
+      "gstin": "UNREGISTERED_INFORMAL",
+      "xgn_details": {
+        "consent_id": "NONE (Unregistered informal unit)",
+        "consent_type": "Red-CFO",
+        "valid_till": "1970-01-01",
+        "is_active": false,
+        "authorized_monthly_quota_tons": 0,
+        "current_month_consumed_tons": 0
+      }
+    },
+    "F16": {
+      "id": "F16",
+      "name": "M/s. Rock Crystals C&D Processing (Chikkajala)",
+      "cluster": "Chikkajala",
+      "lat": 13.178,
+      "lon": 77.632,
+      "role": "buyer",
+      "material": "recycled_concrete_aggregate",
+      "material_category": "construction_demolition_waste",
+      "hazardous": false,
+      "volume_tons_per_month": 300,
+      "cost_floor_inr_per_ton": null,
+      "cost_ceiling_inr_per_ton": 750,
+      "certified_hazard_handler": true,
+      "kspcb_consent_id": "KSPCB/CDW/CHK/2023/AUTH-1000TPD",
+      "consent_type": "C&D-Auth",
+      "nearest_caaqms": "HEBBAL",
+      "gstin": "29AABCR8102B1Z8",
+      "quality_requirements": {
+        "max_water_absorption_pct": 5
+      },
+      "xgn_details": {
+        "consent_id": "KSPCB/CDW/CHK/2023/AUTH-1000TPD",
+        "consent_type": "C&D-Auth",
+        "valid_till": "2028-06-30",
+        "is_active": true,
+        "authorized_monthly_quota_tons": 30000,
+        "current_month_consumed_tons": 6400
+      }
+    },
+    "F17": {
+      "id": "F17",
+      "name": "Sri Ganesh Precision Components (Tumkur Industrial Estate)",
+      "cluster": "Tumkur",
+      "lat": 13.348,
+      "lon": 77.108,
+      "role": "seller",
+      "material": "plastic_scrap",
+      "material_category": "recyclable_plastic",
+      "hazardous": false,
+      "volume_tons_per_month": 1.8,
+      "cost_floor_inr_per_ton": 1610,
+      "cost_ceiling_inr_per_ton": null,
+      "certified_hazard_handler": false,
+      "kspcb_consent_id": "KSPCB/XGN/TUM/2024/ORG-6601",
+      "consent_type": "Orange-CFO",
+      "nearest_caaqms": "CITY_RAILWAY",
+      "gstin": "29AABCG7712M1Z2",
+      "xgn_details": {
+        "consent_id": "KSPCB/XGN/TUM/2024/ORG-6601",
+        "consent_type": "Orange-CFO",
+        "valid_till": "2028-02-28",
+        "is_active": true,
+        "authorized_monthly_quota_tons": 6,
+        "current_month_consumed_tons": 1.2
+      }
+    },
+    "F18": {
+      "id": "F18",
+      "name": "Bharat Auto Ancillaries (Tumkur)",
+      "cluster": "Tumkur",
+      "lat": 13.332,
+      "lon": 77.093,
+      "role": "seller",
+      "material": "plastic_scrap",
+      "material_category": "recyclable_plastic",
+      "hazardous": false,
+      "volume_tons_per_month": 2.1,
+      "cost_floor_inr_per_ton": 1550,
+      "cost_ceiling_inr_per_ton": null,
+      "certified_hazard_handler": false,
+      "kspcb_consent_id": "KSPCB/XGN/TUM/2024/ORG-6602",
+      "consent_type": "Orange-CFO",
+      "nearest_caaqms": "CITY_RAILWAY",
+      "gstin": "29AABCB4471N1Z6",
+      "xgn_details": {
+        "consent_id": "KSPCB/XGN/TUM/2024/ORG-6602",
+        "consent_type": "Orange-CFO",
+        "valid_till": "2027-09-30",
+        "is_active": true,
+        "authorized_monthly_quota_tons": 6,
+        "current_month_consumed_tons": 0.9
+      }
+    },
+    "F19": {
+      "id": "F19",
+      "name": "Nandi Plastics Micro Unit (Tumkur)",
+      "cluster": "Tumkur",
+      "lat": 13.345,
+      "lon": 77.115,
+      "role": "seller",
+      "material": "plastic_scrap",
+      "material_category": "recyclable_plastic",
+      "hazardous": false,
+      "volume_tons_per_month": 1.6,
+      "cost_floor_inr_per_ton": 1500,
+      "cost_ceiling_inr_per_ton": null,
+      "certified_hazard_handler": false,
+      "kspcb_consent_id": "KSPCB/XGN/TUM/2024/ORG-6603",
+      "consent_type": "Orange-CFO",
+      "nearest_caaqms": "CITY_RAILWAY",
+      "gstin": "29AABCN8890P1Z9",
+      "xgn_details": {
+        "consent_id": "KSPCB/XGN/TUM/2024/ORG-6603",
+        "consent_type": "Orange-CFO",
+        "valid_till": "2028-07-31",
+        "is_active": true,
+        "authorized_monthly_quota_tons": 5,
+        "current_month_consumed_tons": 0.6
+      }
+    }
+  }
+}

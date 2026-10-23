@@ -1,0 +1,577 @@
+{
+  "items": [
+    {
+      "seller_id": "F04",
+      "buyer_id": "F10",
+      "material": "fly_ash",
+      "distance_km": 0.11,
+      "volume": 120,
+      "route": {
+        "transport_cost_total_inr": 103.92,
+        "co2_avoided_kg": 108000,
+        "co2_transport_kg": 1.3,
+        "net_co2_impact_kg": 107998.7,
+        "pm10_avoided_kg": 744,
+        "so2_avoided_kg": 576,
+        "corridor": "Karnataka State Highway & Industrial Feeder Network"
+      },
+      "quality": {
+        "compatible": true,
+        "penalty": 0
+      },
+      "negotiation": {
+        "outcome": "DEAL",
+        "final": 780,
+        "rounds": [
+          [
+            840,
+            720
+          ],
+          [
+            825,
+            735
+          ],
+          [
+            810,
+            750
+          ],
+          [
+            795,
+            765
+          ],
+          [
+            780,
+            780
+          ]
+        ],
+        "quality_adj": null
+      },
+      "freight": {
+        "outcome": "DEAL",
+        "carrier": "CAR05",
+        "rate": 1147,
+        "total": 15940,
+        "rounds": [
+          [
+            3,
+            2291
+          ]
+        ]
+      },
+      "regulatory": {
+        "decision": "APPROVED",
+        "rule": "MoEFCC SO 5481(E): Mandatory 100% ash utilization mandate for cement, RMC, and bricks within 300km."
+      },
+      "passport": true,
+      "contract_total": 98280,
+      "pooled": false,
+      "pooled_members": null
+    },
+    {
+      "seller_id": "POOL-PLASTIC_SCRAP-TUMKUR",
+      "buyer_id": "F12",
+      "material": "plastic_scrap",
+      "distance_km": 0.8,
+      "volume": 5.5,
+      "route": {
+        "transport_cost_total_inr": 35.06,
+        "co2_avoided_kg": 11000,
+        "co2_transport_kg": 0.44,
+        "net_co2_impact_kg": 10999.56,
+        "pm10_avoided_kg": 11.55,
+        "so2_avoided_kg": 0,
+        "corridor": "Karnataka State Highway & Industrial Feeder Network"
+      },
+      "quality": {
+        "compatible": true,
+        "penalty": 0
+      },
+      "negotiation": {
+        "outcome": "DEAL",
+        "final": 1839,
+        "rounds": [
+          [
+            2177,
+            1500
+          ],
+          [
+            2092,
+            1585
+          ],
+          [
+            2008,
+            1669
+          ],
+          [
+            1923,
+            1754
+          ],
+          [
+            1839,
+            1839
+          ]
+        ],
+        "quality_adj": null
+      },
+      "freight": {
+        "outcome": "DEAL",
+        "carrier": "CAR04",
+        "rate": 269,
+        "total": 1984,
+        "rounds": [
+          [
+            42,
+            496
+          ]
+        ]
+      },
+      "regulatory": {
+        "decision": "APPROVED",
+        "rule": "Standard non-hazardous material handling under KSPCB rules."
+      },
+      "passport": true,
+      "contract_total": 11936,
+      "pooled": true,
+      "pooled_members": [
+        {
+          "facility_id": "F17",
+          "facility_name": "Sri Ganesh Precision Components (Tumkur Industrial Estate)",
+          "volume_tons": 1.8,
+          "share_pct": 32.7,
+          "freight_share_inr": 649,
+          "net_payout_inr": 2661
+        },
+        {
+          "facility_id": "F18",
+          "facility_name": "Bharat Auto Ancillaries (Tumkur)",
+          "volume_tons": 2.1,
+          "share_pct": 38.2,
+          "freight_share_inr": 758,
+          "net_payout_inr": 3104
+        },
+        {
+          "facility_id": "F19",
+          "facility_name": "Nandi Plastics Micro Unit (Tumkur)",
+          "volume_tons": 1.6,
+          "share_pct": 29.1,
+          "freight_share_inr": 577,
+          "net_payout_inr": 2365
+        }
+      ]
+    },
+    {
+      "seller_id": "F01",
+      "buyer_id": "F15",
+      "material": "chrome_sludge",
+      "distance_km": 1.4,
+      "volume": 6.5,
+      "route": {
+        "transport_cost_total_inr": 72.87,
+        "co2_avoided_kg": 0,
+        "co2_transport_kg": 0.91,
+        "net_co2_impact_kg": -0.91,
+        "pm10_avoided_kg": 0,
+        "so2_avoided_kg": 0,
+        "corridor": "Karnataka State Highway & Industrial Feeder Network"
+      },
+      "quality": {
+        "compatible": true,
+        "penalty": 0
+      },
+      "negotiation": {
+        "outcome": "DEAL",
+        "final": 1620,
+        "rounds": [
+          [
+            1680,
+            1560
+          ],
+          [
+            1665,
+            1575
+          ],
+          [
+            1650,
+            1590
+          ],
+          [
+            1635,
+            1605
+          ],
+          [
+            1620,
+            1620
+          ]
+        ],
+        "quality_adj": null
+      },
+      "freight": {
+        "outcome": "DEAL",
+        "carrier": "CAR04",
+        "rate": 228,
+        "total": 2875,
+        "rounds": [
+          [
+            36,
+            420
+          ]
+        ]
+      },
+      "regulatory": {
+        "decision": "VETOED",
+        "rule": "KSPCB HW Rules 2016 (Sched. II): Requires KSPCB Authorized CETP (e.g. VIWA Eco-Club) or TSDF (KWMP Dabaspet) manifest Form-10."
+      },
+      "passport": false,
+      "contract_total": null,
+      "pooled": false,
+      "pooled_members": null
+    },
+    {
+      "seller_id": "F02",
+      "buyer_id": "F14",
+      "material": "used_oil",
+      "distance_km": 8.67,
+      "volume": 3.8,
+      "route": {
+        "transport_cost_total_inr": 263.58,
+        "co2_avoided_kg": 1520,
+        "co2_transport_kg": 3.29,
+        "net_co2_impact_kg": 1516.71,
+        "pm10_avoided_kg": 4.56,
+        "so2_avoided_kg": 6.84,
+        "corridor": "Karnataka State Highway & Industrial Feeder Network"
+      },
+      "quality": {
+        "compatible": true,
+        "penalty": 0
+      },
+      "negotiation": {
+        "outcome": "DEAL",
+        "final": 1225,
+        "rounds": [
+          [
+            1190,
+            1260
+          ]
+        ],
+        "quality_adj": null
+      },
+      "freight": {
+        "outcome": "DEAL",
+        "carrier": "CAR04",
+        "rate": 48,
+        "total": 2381,
+        "rounds": [
+          [
+            36,
+            61
+          ]
+        ]
+      },
+      "regulatory": {
+        "decision": "APPROVED",
+        "rule": "KSPCB HW Rules 2016 (Sched. IV): Requires KSPCB Authorized Rerefiner under CPCB Centralized EPR Portal."
+      },
+      "passport": true,
+      "contract_total": 5493,
+      "pooled": false,
+      "pooled_members": null
+    },
+    {
+      "seller_id": "F03",
+      "buyer_id": "F11",
+      "material": "metal_scrap",
+      "distance_km": 10.94,
+      "volume": 28,
+      "route": {
+        "transport_cost_total_inr": 2451.05,
+        "co2_avoided_kg": 42000,
+        "co2_transport_kg": 30.64,
+        "net_co2_impact_kg": 41969.36,
+        "pm10_avoided_kg": 98,
+        "so2_avoided_kg": 70,
+        "corridor": "Karnataka State Highway & Industrial Feeder Network"
+      },
+      "quality": {
+        "compatible": true,
+        "penalty": 0
+      },
+      "negotiation": {
+        "outcome": "DEAL",
+        "final": 2220,
+        "rounds": [
+          [
+            2520,
+            1920
+          ],
+          [
+            2445,
+            1995
+          ],
+          [
+            2370,
+            2070
+          ],
+          [
+            2295,
+            2145
+          ],
+          [
+            2220,
+            2220
+          ]
+        ],
+        "quality_adj": null
+      },
+      "freight": {
+        "outcome": "DEAL",
+        "carrier": "CAR02",
+        "rate": 29,
+        "total": 9683,
+        "rounds": [
+          [
+            4,
+            54
+          ]
+        ]
+      },
+      "regulatory": {
+        "decision": "APPROVED",
+        "rule": "Standard non-hazardous material handling under KSPCB rules."
+      },
+      "passport": true,
+      "contract_total": 73349,
+      "pooled": false,
+      "pooled_members": null
+    },
+    {
+      "seller_id": "F08",
+      "buyer_id": "F16",
+      "material": "recycled_concrete_aggregate",
+      "distance_km": 24.18,
+      "volume": 250,
+      "route": {
+        "transport_cost_total_inr": 48442.08,
+        "co2_avoided_kg": 212500,
+        "co2_transport_kg": 604.46,
+        "net_co2_impact_kg": 211895.54,
+        "pm10_avoided_kg": 3625,
+        "so2_avoided_kg": 225,
+        "corridor": "SH-104 / Budigere Cross Outer Airport Bypass Link"
+      },
+      "quality": {
+        "compatible": true,
+        "penalty": 0
+      },
+      "negotiation": {
+        "outcome": "DEAL",
+        "final": 540,
+        "rounds": [
+          [
+            630,
+            450
+          ],
+          [
+            608,
+            473
+          ],
+          [
+            585,
+            495
+          ],
+          [
+            563,
+            518
+          ],
+          [
+            540,
+            540
+          ]
+        ],
+        "quality_adj": null
+      },
+      "freight": {
+        "outcome": "DEAL",
+        "carrier": "CAR05",
+        "rate": 4,
+        "total": 24980,
+        "rounds": [
+          [
+            2,
+            5
+          ]
+        ]
+      },
+      "regulatory": {
+        "decision": "APPROVED",
+        "rule": "CPCB 2017 & C&D Waste Rules 2016: Governed by BIS IS:383:2016 for Recycled Concrete Aggregate (max 20% in RCC M25; 100% in lean concrete)."
+      },
+      "passport": true,
+      "contract_total": 141750,
+      "pooled": false,
+      "pooled_members": null
+    },
+    {
+      "seller_id": "F01",
+      "buyer_id": "F13",
+      "material": "chrome_sludge",
+      "distance_km": 29.78,
+      "volume": 6.5,
+      "route": {
+        "transport_cost_total_inr": 1828.37,
+        "co2_avoided_kg": 0,
+        "co2_transport_kg": 19.35,
+        "net_co2_impact_kg": -19.35,
+        "pm10_avoided_kg": 0,
+        "so2_avoided_kg": 0,
+        "corridor": "NICE Peripheral Ring Expressway Corridor"
+      },
+      "quality": {
+        "compatible": true,
+        "penalty": 0
+      },
+      "negotiation": {
+        "outcome": "DEAL",
+        "final": 1500,
+        "rounds": [
+          [
+            1680,
+            1320
+          ],
+          [
+            1635,
+            1365
+          ],
+          [
+            1590,
+            1410
+          ],
+          [
+            1545,
+            1455
+          ],
+          [
+            1500,
+            1500
+          ]
+        ],
+        "quality_adj": null
+      },
+      "freight": {
+        "outcome": "NO_CARRIER",
+        "carrier": "CAR04",
+        "rate": null,
+        "total": null,
+        "rounds": []
+      },
+      "regulatory": null,
+      "passport": false,
+      "contract_total": null,
+      "pooled": false,
+      "pooled_members": null
+    },
+    {
+      "seller_id": "F05",
+      "buyer_id": "F09",
+      "material": "steel_slag",
+      "distance_km": 42.75,
+      "volume": 55,
+      "route": {
+        "transport_cost_total_inr": 19050.67,
+        "co2_avoided_kg": 99000,
+        "co2_transport_kg": 235.13,
+        "net_co2_impact_kg": 98764.87,
+        "pm10_avoided_kg": 275,
+        "so2_avoided_kg": 176,
+        "corridor": "Kanakapura Road (NH-948) & NICE South Corridor"
+      },
+      "quality": {
+        "compatible": true,
+        "penalty": 0
+      },
+      "negotiation": {
+        "outcome": "NO_DEAL",
+        "final": null,
+        "rounds": [
+          [
+            4760,
+            1140
+          ],
+          [
+            4308,
+            1593
+          ],
+          [
+            3855,
+            1900
+          ],
+          [
+            3403,
+            1900
+          ],
+          [
+            3400,
+            1900
+          ]
+        ],
+        "quality_adj": null
+      },
+      "freight": null,
+      "regulatory": null,
+      "passport": false,
+      "contract_total": null,
+      "pooled": false,
+      "pooled_members": null
+    }
+  ],
+  "all_candidates": [
+    [
+      "F01",
+      "F13",
+      29.78,
+      true
+    ],
+    [
+      "F01",
+      "F15",
+      1.4,
+      true
+    ],
+    [
+      "F02",
+      "F14",
+      8.67,
+      true
+    ],
+    [
+      "F03",
+      "F11",
+      10.94,
+      true
+    ],
+    [
+      "F04",
+      "F10",
+      0.11,
+      true
+    ],
+    [
+      "F05",
+      "F09",
+      42.75,
+      true
+    ],
+    [
+      "F08",
+      "F16",
+      24.18,
+      true
+    ],
+    [
+      "POOL-PLASTIC_SCRAP-TUMKUR",
+      "F12",
+      0.8,
+      true
+    ]
+  ]
+}
