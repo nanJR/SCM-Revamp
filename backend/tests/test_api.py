@@ -45,3 +45,10 @@ def test_add_facility():
     f = client.post("/api/facilities/add", json={"name": "Test Precast", "role": "buyer", "cluster": "Bidadi"}).json()
     assert f["cost_ceiling_inr_per_ton"] == 850
     assert f["id"] in client.get("/api/facilities").json()
+
+
+def test_describe_falls_back_to_facts_without_llm():
+    client.post("/api/reset")
+    body = client.post("/api/facilities/F04/describe").json()
+    assert "120" in body["description"] and "fly ash" in body["description"]
+    assert client.post("/api/facilities/NOPE/describe").status_code == 404
