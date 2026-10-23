@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Navbar, Tab } from './components/Navbar';
 import { InsightsTab } from './components/InsightsTab';
 import { AuditTab } from './components/AuditTab';
+import { WorkspaceTab } from './components/WorkspaceTab';
 import { api, Health } from './lib/api';
 import { FacilitiesTab } from './components/FacilitiesTab';
 import { FleetTab } from './components/FleetTab';
@@ -225,6 +226,16 @@ export function App() {
             )}
 
             {activeTab === 'audit' && <AuditTab refreshKey={runCount} />}
+
+            {activeTab === 'workspace' && (
+              <WorkspaceTab
+                facilities={facilities}
+                carriers={carriers}
+                results={results}
+                disposals={disposals}
+                onRunPipelineNav={() => setActiveTab('pipeline')}
+              />
+            )}
           </>
         )}
       </main>
