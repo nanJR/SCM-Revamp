@@ -84,7 +84,9 @@ export function App() {
   };
 
   // What the API returns depends on who is signed in, so reload on sign-in and sign-out.
+  // An error from the previous account no longer applies, so clear it too.
   useEffect(() => {
+    setNotice(null);
     loadInitialData();
   }, [userId]);
 
