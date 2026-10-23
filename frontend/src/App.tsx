@@ -21,8 +21,12 @@ export function App() {
   );
   const [health, setHealth] = useState<Health | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
-  const { session } = useSession();
+  const { session, profile } = useSession();
   const userId = session?.user.id ?? null;
+  // Mirrors the API's rules: with sign-in enforced, only staff run matching and only admins reset.
+  const authOn = health?.auth === 'required';
+  const canRun = !authOn || profile?.role === 'regulator' || profile?.role === 'admin';
+  const canReset = !authOn || profile?.role === 'admin';
   const [runCount, setRunCount] = useState<number>(0);
   const [isStandardsModalOpen, setIsStandardsModalOpen] = useState<boolean>(false);
   const [isLimitationsModalOpen, setIsLimitationsModalOpen] = useState<boolean>(false);
@@ -169,7 +173,7 @@ export function App() {
       <Navbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        onReset={handleReset}
+        onReset={canReset ? handleReset : undefined}
         resetting={resetting}
         onOpenStandards={() => setIsStandardsModalOpen(true)}
         onOpenLimitations={() => setIsLimitationsModalOpen(true)}
@@ -216,7 +220,7 @@ export function App() {
             {activeTab === 'pipeline' && (
               <PipelineTab
                 results={results}
-                onRunPipeline={handleRunPipeline}
+                onRunPipeline={canRun ? handleRunPipeline : undefined}
                 running={running}
                 onSelectTranscript={(idx) => {
                   setSelectedTranscriptIndex(idx);
