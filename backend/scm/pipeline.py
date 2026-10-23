@@ -1,4 +1,5 @@
-"""Orchestrates one full run: pool -> match -> negotiate -> freight -> audit -> regulate -> mint.
+"""Orchestrates one full run: pool -> match -> negotiate -> freight -> audit -> regulate -> mint,
+then routes leftover hazardous waste to a KSPCB disposal site.
 
 Every agent decision is written to the decision log with its inputs, rule and
 reason, so a regulator can audit why any deal was made or blocked.
@@ -11,6 +12,7 @@ from dataclasses import dataclass, field
 from datetime import date
 from typing import Any
 
+from .disposal import load_sites, plan_disposal
 from .ledger import mint
 from .llm import Narrator
 from .logistics import negotiate_freight, select_carrier
@@ -18,6 +20,8 @@ from .matchmaker import find_candidates, pool_micro_lots, rank_candidates
 from .models import (
     Carrier,
     DecisionRecord,
+    DisposalResult,
+    DisposalSite,
     DigitalWastePassport,
     Facility,
     PipelineItemResult,
@@ -37,6 +41,7 @@ class RunResult:
     items: list[PipelineItemResult]
     passports: list[DigitalWastePassport]
     decisions: list[DecisionRecord] = field(default_factory=list)
+    disposals: list[DisposalResult] = field(default_factory=list)
 
 
 async def run_pipeline(
@@ -47,6 +52,7 @@ async def run_pipeline(
     narrator: Narrator,
     as_of: date | None = None,
     rng: random.Random | None = None,
+    sites: list[DisposalSite] | None = None,
 ) -> RunResult:
     decisions: list[DecisionRecord] = []
     model = narrator.model_label
@@ -216,4 +222,46 @@ async def run_pipeline(
             )
         )
 
-    return RunResult(items=items, passports=minted, decisions=decisions)
+    # Hazardous waste that no recycler took still has to go somewhere legal.
+    disposals: list[DisposalResult] = []
+    pooled_member_ids = {m.facility_id for members in membership.values() for m in members}
+    for f in facilities.values():
+        if f.role != "seller" or not f.hazardous or f.id in pooled_member_ids:
+            continue
+        leftover = round_to(f.volume_tons_per_month - allocated.get(f.id, 0), 2)
+        if leftover <= ALLOCATION_TOLERANCE:
+            continue
+        result = plan_disposal(f, leftover, sites if sites is not None else load_sites(), carriers, as_of or date.today())
+        subject = {"seller_id": f.id, "material": f.material}
+        for r in result.rejected_sites:
+            log("regulator", "reject_site", {**subject, "site_id": r.site_id}, reason=r.reason,
+                rule="HOWM Rules 2016: waste may only go to an operating authorised facility")
+        log(
+            "disposal",
+            "route_to_site",
+            subject,
+            inputs={"volume_tons": leftover},
+            output={"decision": result.decision, "site_id": result.site_id, "total_cost_inr": result.total_cost_inr},
+            rule=result.rule_applied,
+            reason=result.explanation,
+        )
+        if result.decision == "APPROVED":
+            deal = dict(
+                type="disposal",
+                seller_id=f.id,
+                site_id=result.site_id,
+                material=f.material,
+                volume_tons=leftover,
+                gate_fee_inr_per_ton=result.gate_fee_inr_per_ton,
+                carrier_id=result.carrier_id,
+                total_cost_inr=result.total_cost_inr,
+                manifest="Form 10, Hazardous and Other Wastes Rules 2016",
+            )
+            result.passport = mint(new_chain, deal)
+            new_chain.append(result.passport)
+            minted.append(result.passport)
+            log("passport_minter", "mint", {**subject, "site_id": result.site_id},
+                output={"block_index": result.passport.block_index, "record_hash": result.passport.record_hash})
+        disposals.append(result)
+
+    return RunResult(items=items, passports=minted, decisions=decisions, disposals=disposals)

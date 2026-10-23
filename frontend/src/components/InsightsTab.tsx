@@ -1,7 +1,7 @@
 import React from 'react';
-import { Gauge, Leaf, Truck, ShieldAlert, Scale, Package } from 'lucide-react';
+import { Gauge, Leaf, Truck, ShieldAlert, Scale, Package, Factory, XCircle } from 'lucide-react';
 import { Card } from './ui/card';
-import { PipelineItemResult } from '../types';
+import { DisposalResult, PipelineItemResult } from '../types';
 
 // Supply-chain KPIs for the latest run. Names follow SCOR where one fits
 // (perfect order fulfilment, cost to serve) so the numbers read the same way
@@ -9,6 +9,7 @@ import { PipelineItemResult } from '../types';
 
 interface InsightsTabProps {
   results: PipelineItemResult[];
+  disposals: DisposalResult[];
   onRunPipelineNav: () => void;
 }
 
@@ -80,7 +81,7 @@ const Stat: React.FC<{ icon: React.ElementType; label: string; value: string; hi
   </Card>
 );
 
-export const InsightsTab: React.FC<InsightsTabProps> = ({ results, onRunPipelineNav }) => {
+export const InsightsTab: React.FC<InsightsTabProps> = ({ results, disposals, onRunPipelineNav }) => {
   if (results.length === 0) {
     return (
       <Card className="p-10 items-center text-center gap-3">
@@ -132,6 +133,8 @@ export const InsightsTab: React.FC<InsightsTabProps> = ({ results, onRunPipeline
         </div>
       </Card>
 
+      {disposals.length > 0 && <DisposalCard disposals={disposals} />}
+
       {k.vetoReasons.length > 0 && (
         <Card className="p-5 gap-2">
           <div className="text-sm font-bold">Why deals were vetoed</div>
@@ -146,5 +149,54 @@ export const InsightsTab: React.FC<InsightsTabProps> = ({ results, onRunPipeline
         </Card>
       )}
     </div>
+  );
+};
+
+const KIND: Record<string, string> = { tsdf: 'TSDF', incinerator: 'Incinerator', co_processing: 'Co-processing' };
+
+// Hazardous lots no recycler took. The generator pays the site's gate fee plus
+// freight, and the regulator refuses sites that are full or closed.
+const DisposalCard: React.FC<{ disposals: DisposalResult[] }> = ({ disposals }) => {
+  const paid = disposals.reduce((a, d) => a + (d.total_cost_inr ?? 0), 0);
+  return (
+    <Card className="p-5 gap-3">
+      <div>
+        <div className="text-sm font-bold flex items-center gap-1.5">
+          <Factory className="w-4 h-4" /> Hazardous waste with no recycler
+        </div>
+        <p className="text-xs text-muted-foreground">
+          Routed to the cheapest operating KSPCB-listed site. Generators pay {inr(paid)} in total. Gate fees are
+          indicative until real site quotes are in.
+        </p>
+      </div>
+      <div className="flex flex-col gap-2">
+        {disposals.map((d) => (
+          <div key={d.seller_id} className="rounded-xl border border-border p-3 text-xs flex flex-col gap-1.5">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+              <span className="font-mono font-semibold">{d.seller_id}</span>
+              <span className="text-muted-foreground">{d.volume_tons} t {d.material.replace(/_/g, ' ')}</span>
+              <span className="text-muted-foreground">→</span>
+              {d.decision === 'APPROVED' ? (
+                <span className="font-semibold">
+                  {d.site_name} <span className="text-muted-foreground font-normal">({KIND[d.site_kind ?? ''] ?? d.site_kind}, {d.road_km} km)</span>
+                </span>
+              ) : (
+                <span className="font-semibold text-red-700 dark:text-red-300">Blocked</span>
+              )}
+              {d.total_cost_inr != null && <span className="sm:ml-auto font-mono font-semibold">{inr(d.total_cost_inr)}</span>}
+            </div>
+            <div className="text-muted-foreground">{d.explanation}</div>
+            {d.rejected_sites.map((r) => (
+              <div key={r.site_id} className="flex items-start gap-1.5 text-muted-foreground">
+                <XCircle className="w-3.5 h-3.5 mt-px shrink-0 text-red-600 dark:text-red-400" />
+                <span>
+                  Skipped {r.site_name}: {r.reason}
+                </span>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </Card>
   );
 };

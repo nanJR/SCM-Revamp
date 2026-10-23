@@ -52,3 +52,17 @@ def test_describe_falls_back_to_facts_without_llm():
     body = client.post("/api/facilities/F04/describe").json()
     assert "120" in body["description"] and "fly ash" in body["description"]
     assert client.post("/api/facilities/NOPE/describe").status_code == 404
+
+
+def test_run_routes_leftover_hazardous_waste_and_mints_its_passport():
+    client.post("/api/reset")
+    run = client.post("/api/pipeline/run").json()
+    disposals = client.get("/api/disposals").json()
+    assert disposals == run["disposals"]
+    approved = [d for d in disposals if d["decision"] == "APPROVED"]
+    assert approved and all(d["passport"] for d in approved)
+    assert all(d["site_id"] != "TSDF-HAROHALLI" for d in approved)
+    deal_passports = sum(1 for i in run["items"] if i["passport"])
+    assert run["minted"] == deal_passports + len(approved)
+    assert any(d["action"] == "reject_site" for d in client.get("/api/decisions").json())
+    assert len(client.get("/api/disposal-sites").json()) == 21

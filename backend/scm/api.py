@@ -12,9 +12,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from . import constants as c
+from .disposal import load_sites
 from .ledger import verify
 from .llm import Narrator
-from .models import Facility, SensorReading
+from .models import DisposalSite, Facility, SensorReading
 from .pipeline import run_pipeline
 from .numbers import js_round, round_to
 from .store import load_seed, make_store
@@ -157,14 +158,26 @@ async def run() -> dict[str, Any]:
     result = await run_pipeline(store.facilities(), store.carriers(), store.taxonomy, store.passports(), narrator)
     store.append_passports(result.passports)
     items = [i.model_dump(mode="json") for i in result.items]
-    run_id = store.record_run(items, result.decisions)
-    return {"run_id": run_id, "items": items, "minted": len(result.passports)}
+    disposals = [d.model_dump(mode="json") for d in result.disposals]
+    run_id = store.record_run(items, result.decisions, disposals)
+    return {"run_id": run_id, "items": items, "disposals": disposals, "minted": len(result.passports)}
 
 
 @app.get("/api/pipeline/results")
 def results() -> list[dict[str, Any]]:
     latest = store.latest_run()
     return latest["items"] if latest else []
+
+
+@app.get("/api/disposals")
+def disposals() -> list[dict[str, Any]]:
+    latest = store.latest_run()
+    return latest.get("disposals", []) if latest else []
+
+
+@app.get("/api/disposal-sites")
+def disposal_sites() -> list[DisposalSite]:
+    return load_sites()
 
 
 @app.get("/api/decisions")

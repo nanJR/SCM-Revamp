@@ -8,7 +8,7 @@ import { api, DecisionRecord } from '../lib/api';
 // Every agent action from decision_log: what it saw, what it decided, under
 // which rule, and which model (if any) wrote the explanation.
 
-const AGENTS = ['all', 'aggregator', 'matchmaker', 'negotiation', 'logistics', 'regulator', 'passport_minter'] as const;
+const AGENTS = ['all', 'aggregator', 'matchmaker', 'negotiation', 'logistics', 'regulator', 'disposal', 'passport_minter'] as const;
 
 // Pretty-prints JSON but keeps short arrays of numbers or strings on one line.
 const pretty = (v: unknown) =>

@@ -248,3 +248,48 @@ class DecisionRecord(_Model):
     rule: Optional[str] = None
     reason: Optional[str] = None
     model: Optional[str] = None
+
+
+class DisposalSite(_Model):
+    """A KSPCB-listed TSDF, common incinerator or cement co-processing plant."""
+
+    id: str
+    name: str
+    kind: Literal["tsdf", "incinerator", "co_processing"]
+    district: str
+    lat: float
+    lon: float
+    status: Literal["operating", "full", "not_operating"]
+    design_capacity_t: Optional[float] = None
+    annual_capacity_tpa: Optional[float] = None
+    notes: Optional[str] = None
+    source: str
+
+
+class RejectedSite(_Model):
+    site_id: str
+    site_name: str
+    reason: str
+
+
+class DisposalResult(_Model):
+    """Hazardous waste with no recycler, routed to (or blocked from) a disposal site."""
+
+    seller_id: str
+    seller_name: str
+    material: str
+    volume_tons: float
+    decision: Literal["APPROVED", "VETOED"]
+    rule_applied: str
+    explanation: str
+    site_id: Optional[str] = None
+    site_name: Optional[str] = None
+    site_kind: Optional[str] = None
+    road_km: Optional[float] = None
+    carrier_id: Optional[str] = None
+    carrier_name: Optional[str] = None
+    gate_fee_inr_per_ton: Optional[float] = None
+    freight_inr: Optional[float] = None
+    total_cost_inr: Optional[float] = None
+    rejected_sites: list[RejectedSite] = Field(default_factory=list)
+    passport: Optional[DigitalWastePassport] = None

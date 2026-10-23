@@ -306,8 +306,13 @@ export interface HazardousManifestForm10 {
 }
 
 export interface PassportDealData {
+  /** Set to 'disposal' when hazardous waste went to a KSPCB site instead of a buyer. */
+  type?: 'disposal';
+  site_id?: string;
+  gate_fee_inr_per_ton?: number;
+  total_cost_inr?: number;
   seller_id: string;
-  buyer_id: string;
+  buyer_id?: string;
   material: string;
   volume_tons: number;
   agreed_price_per_ton: number | null;
@@ -319,6 +324,33 @@ export interface PassportDealData {
   logistics_deal?: LogisticsLineItem;
   settlement?: SettlementRecord;
   pooled_members?: PooledMember[];
+}
+
+export interface RejectedSite {
+  site_id: string;
+  site_name: string;
+  reason: string;
+}
+
+export interface DisposalResult {
+  seller_id: string;
+  seller_name: string;
+  material: string;
+  volume_tons: number;
+  decision: 'APPROVED' | 'VETOED';
+  rule_applied: string;
+  explanation: string;
+  site_id: string | null;
+  site_name: string | null;
+  site_kind: 'tsdf' | 'incinerator' | 'co_processing' | null;
+  road_km: number | null;
+  carrier_id: string | null;
+  carrier_name: string | null;
+  gate_fee_inr_per_ton: number | null;
+  freight_inr: number | null;
+  total_cost_inr: number | null;
+  rejected_sites: RejectedSite[];
+  passport: DigitalWastePassport | null;
 }
 
 export interface DigitalWastePassport {

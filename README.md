@@ -79,6 +79,7 @@ The migrations in `supabase/migrations/` are already applied to the project. To 
 - Facility locations are PostGIS `geography` points. `facilities_within(id, km)` uses `ST_DWithin`.
 - Reservation prices (cost floor and ceiling) are kept in `facility_private`, which only the owner or an admin can read. Other users can't see each other's walk-away price.
 - `passports` is append-only, enforced by a trigger. `passport_chain()` lets anyone verify the public chain.
+- Hazardous waste that no recycler takes is routed by the disposal agent (`scm/disposal.py`) to the cheapest operating KSPCB-listed TSDF, incinerator or cement co-processor. The generator pays the gate fee plus freight. The regulator refuses sites that are full or closed. For example, Harohalli TSDF has been full since 3 Feb 2021, so it is skipped and the waste goes to Dabaspet. The gate fees in that file are indicative placeholders, not quotes.
 - Every agent decision is written to `decision_log` with its inputs, output, rule and reason.
 - `reset_seed_facilities()` (behind `POST /api/reset`) puts the seed facilities back to their starting state. It leaves passports and decisions alone, so in Supabase mode a reset does not erase the ledger. In memory mode it starts over completely.
 
@@ -95,4 +96,3 @@ The following are still open, and are planned for Phase 2:
 - Hazardous waste is priced as if the buyer pays the generator. In practice the generator pays a gate fee.
 - The README described an alpha/beta concession curve that was never implemented.
 - The old Firestore rules were `allow read, write: if true`.
-- The regulator does not yet block routing to the Harohalli TSDF, even though it has been full since February 2021.
