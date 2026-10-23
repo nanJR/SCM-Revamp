@@ -157,7 +157,8 @@ class SupabaseStore:
         return self._get("decision_log", select="*", order="id.desc", limit=str(limit))
 
     def reset(self) -> None:
-        resp = self._http.post("/rpc/reset_demo_state", json={})
+        # Restores seed facilities only; passports and decisions are append-only.
+        resp = self._http.post("/rpc/reset_seed_facilities", json={})
         resp.raise_for_status()
 
 
