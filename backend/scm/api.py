@@ -120,6 +120,38 @@ def sensor(body: SensorUpdate) -> Facility:
     return store.upsert_facility(facility)
 
 
+@app.post("/api/facilities/{facility_id}/describe")
+async def describe(facility_id: str) -> dict[str, str]:
+    f = store.facilities().get(facility_id)
+    if f is None:
+        raise HTTPException(404, "Facility not found")
+    material = f.material.replace("_", " ")
+    seller = f.role == "seller"
+    price = f.cost_floor_inr_per_ton if seller else f.cost_ceiling_inr_per_ton
+    xgn = f.xgn_details
+    quota = (
+        f"KSPCB quota {xgn.authorized_monthly_quota_tons} t/month, {xgn.current_month_consumed_tons} t used, "
+        f"consent valid till {xgn.valid_till}"
+        if xgn
+        else "standard consent"
+    )
+    facts = (
+        f"{f.name} in {f.cluster}, Karnataka. {'Generates' if seller else 'Takes in'} "
+        f"{f.volume_tons_per_month} t/month of {material}. "
+        f"{'Floor' if seller else 'Ceiling'} price: {price if price is not None else 'negotiable'} INR/t. "
+        f"{'Hazardous (Form 10 manifest needed)' if f.hazardous else 'Non-hazardous'}. {quota}."
+    )
+    text = await narrator.say(
+        "You are the plant operations lead at this facility. In two short first-person paragraphs, describe "
+        "what is happening on the floor with this material and your commercial and permit position. "
+        "Use only the facts given; do not invent numbers.",
+        facts,
+        fallback=facts,
+        max_tokens=400,
+    )
+    return {"id": facility_id, "description": text}
+
+
 @app.post("/api/pipeline/run")
 async def run() -> dict[str, Any]:
     result = await run_pipeline(store.facilities(), store.carriers(), store.taxonomy, store.passports(), narrator)

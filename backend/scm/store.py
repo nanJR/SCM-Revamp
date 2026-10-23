@@ -68,15 +68,17 @@ class InMemoryStore:
 
     def record_run(self, items: list[dict[str, Any]], decisions: list[DecisionRecord]) -> str:
         run_id = f"run-{len(self.runs) + 1}"
-        self.runs.append({"id": run_id, "items": items, "decisions": [d.model_dump() for d in decisions]})
+        rows = [{**d.model_dump(), "run_id": run_id} for d in decisions]
+        self.runs.append({"id": run_id, "items": items, "decisions": rows})
         return run_id
 
     def latest_run(self) -> dict[str, Any] | None:
         return self.runs[-1] if self.runs else None
 
     def decisions(self, limit: int = 200) -> list[dict[str, Any]]:
+        # Newest first, like the Supabase store.
         out = [d for r in self.runs for d in r["decisions"]]
-        return out[-limit:]
+        return out[::-1][:limit]
 
 
 class SupabaseStore:
