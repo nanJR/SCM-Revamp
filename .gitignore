@@ -7,3 +7,4 @@ __pycache__/
 node_modules/
 dist/
 supabase/.temp/
+.env.local

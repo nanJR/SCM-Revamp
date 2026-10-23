@@ -1,10 +1,10 @@
 import React from 'react';
-import { RotateCcw, Factory, Play, MessageSquareText, BookOpen, TrendingDown, Droplets, Truck, Sun, Moon, Gauge, ScrollText } from 'lucide-react';
+import { RotateCcw, Factory, Play, MessageSquareText, BookOpen, TrendingDown, Droplets, Truck, Sun, Moon, Gauge, ScrollText, UserRound } from 'lucide-react';
 import { PipelineItemResult } from '../types';
 import { Button } from './ui/button';
 import { cn } from '../lib/utils';
 
-export type Tab = 'facilities' | 'fleet' | 'pipeline' | 'transcripts' | 'ledger' | 'insights' | 'audit';
+export type Tab = 'workspace' | 'facilities' | 'fleet' | 'pipeline' | 'transcripts' | 'ledger' | 'insights' | 'audit';
 
 interface NavbarProps {
   activeTab: Tab;
@@ -48,6 +48,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const sandSavedLiters = sandSavedTons * 625;
 
   const tabs: { id: NavbarProps['activeTab']; label: string; icon: React.ElementType; idAttr: string }[] = [
+    { id: 'workspace', label: 'My Desk', icon: UserRound, idAttr: 'nav-workspace-tab' },
     { id: 'facilities', label: 'Factories', icon: Factory, idAttr: 'nav-facilities-tab' },
     { id: 'fleet', label: 'Fleet', icon: Truck, idAttr: 'nav-fleet-tab' },
     { id: 'pipeline', label: 'Match Deals', icon: Play, idAttr: 'nav-pipeline-tab' },

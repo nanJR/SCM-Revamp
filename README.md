@@ -50,6 +50,23 @@ npm run dev        # http://localhost:5173, with /api proxied to the backend on 
 
 The tabs are Factories, Fleet, Match Deals, Negotiations, Passports, **KPIs** and **Audit**. KPIs shows SCOR-style network metrics for the latest run, such as perfect order rate, cost to serve, tonnes diverted, net CO₂ and the seller's share of surplus. Audit lists every agent decision from `decision_log`. Set `SCM_API_URL` if the backend is not running on `localhost:8000`.
 
+### Sign-in and the My Desk tab
+
+**My Desk** shows one workspace per role:
+
+| Role | What the workspace shows |
+| --- | --- |
+| Seller | Your offers, private floor price, consent status and any disposal bill |
+| Buyer | Supply offered to you, your quality specs and spend |
+| Carrier | Trips quoted to you and freight earned |
+| KSPCB regulator | Vetoes, disposal routing, refused sites and a consent watchlist |
+
+Without Supabase settings, the tab runs in demo mode and you pick who to view as.
+
+To turn on real accounts, run `cp .env.example .env.local` in `frontend/` and restart `npm run dev`. New users sign up as a seller, buyer or carrier. They then link their account to one unclaimed facility or fleet through `claim_facility` / `claim_carrier`, and each facility or fleet can only be claimed once. Regulator and admin roles can only be granted by an admin, in the `profiles` table.
+
+Supabase asks new users to confirm their email by default. For local testing, you can turn that off in the Supabase dashboard under **Authentication → Sign In / Providers → Email**.
+
 ## Environment variables
 
 | Variable | Default | Meaning |
