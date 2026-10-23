@@ -8,6 +8,7 @@ import type {
   LedgerVerification,
   PipelineItemResult,
 } from '../types';
+import { supabase } from './supabase';
 
 export interface DecisionRecord {
   id?: number;
@@ -27,12 +28,21 @@ export interface Health {
   status: string;
   llm: string;
   store: string;
+  /** 'required' when the backend checks Supabase sign-in (SCM_AUTH=required). */
+  auth: 'required' | 'off';
+}
+
+// Sends the Supabase access token when someone is signed in. The backend
+// ignores it unless it runs with SCM_AUTH=required.
+async function authHeader(): Promise<Record<string, string>> {
+  const token = supabase ? (await supabase.auth.getSession()).data.session?.access_token : undefined;
+  return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
 async function call<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(path, {
     ...init,
-    headers: { 'Content-Type': 'application/json', ...(init?.headers ?? {}) },
+    headers: { 'Content-Type': 'application/json', ...(await authHeader()), ...(init?.headers ?? {}) },
   });
   if (!res.ok) {
     const body = await res.json().catch(() => ({}));

@@ -4,6 +4,7 @@ import { InsightsTab } from './components/InsightsTab';
 import { AuditTab } from './components/AuditTab';
 import { WorkspaceTab } from './components/WorkspaceTab';
 import { api, Health } from './lib/api';
+import { useSession } from './lib/session';
 import { FacilitiesTab } from './components/FacilitiesTab';
 import { FleetTab } from './components/FleetTab';
 import { PipelineTab } from './components/PipelineTab';
@@ -19,6 +20,9 @@ export function App() {
     (new URLSearchParams(window.location.search).get('tab') as Tab) || 'facilities'
   );
   const [health, setHealth] = useState<Health | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+  const { session } = useSession();
+  const userId = session?.user.id ?? null;
   const [runCount, setRunCount] = useState<number>(0);
   const [isStandardsModalOpen, setIsStandardsModalOpen] = useState<boolean>(false);
   const [isLimitationsModalOpen, setIsLimitationsModalOpen] = useState<boolean>(false);
@@ -79,9 +83,10 @@ export function App() {
     }
   };
 
+  // What the API returns depends on who is signed in, so reload on sign-in and sign-out.
   useEffect(() => {
     loadInitialData();
-  }, []);
+  }, [userId]);
 
   const handleUpdateSensor = async (facilityId: string, moisture: number, contamination: boolean) => {
     const facility = await api.updateSensor(facilityId, moisture, contamination);
@@ -103,6 +108,7 @@ export function App() {
 
   const handleRunPipeline = async () => {
     setRunning(true);
+    setNotice(null);
     try {
       const run = await api.runPipeline();
       const led = await api.ledger();
@@ -115,6 +121,7 @@ export function App() {
       setRunCount((n) => n + 1);
     } catch (err) {
       console.error('Error running pipeline:', err);
+      setNotice(`Couldn't run matching: ${(err as Error).message}`);
     } finally {
       setRunning(false);
     }
@@ -124,6 +131,7 @@ export function App() {
   // is append-only and survives a reset.
   const handleReset = async () => {
     setResetting(true);
+    setNotice(null);
     try {
       await api.reset();
       const [fac, led] = await Promise.all([api.facilities(), api.ledger()]);
@@ -135,6 +143,7 @@ export function App() {
       setHasUserVerified(false);
     } catch (err) {
       console.error('Failed to reset:', err);
+      setNotice(`Couldn't reset: ${(err as Error).message}`);
     } finally {
       setResetting(false);
     }
@@ -169,6 +178,19 @@ export function App() {
       />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {notice && (
+          <div role="alert" className="mb-4 flex items-start justify-between gap-3 rounded-xl border border-red-300 bg-red-50 px-4 py-2 text-sm text-red-800 dark:border-red-800 dark:bg-red-950 dark:text-red-200">
+            <span>{notice}</span>
+            <button className="text-xs underline" onClick={() => setNotice(null)}>
+              Dismiss
+            </button>
+          </div>
+        )}
+        {health?.auth === 'required' && !userId && (
+          <div className="mb-4 rounded-xl border border-border bg-card px-4 py-2 text-sm text-muted-foreground">
+            You are signed out, so deals, passports and prices are hidden. Sign in from My Desk to see your own.
+          </div>
+        )}
         {loading ? (
           <div className="flex items-center justify-center py-24 text-muted-foreground text-sm font-medium">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#ea580c] mr-3"></div>

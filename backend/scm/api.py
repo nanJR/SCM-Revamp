@@ -7,16 +7,18 @@ import os
 import random
 from typing import Any, Optional
 
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from . import constants as c
+from .auth import Caller, auth_required, get_caller, require
 from .disposal import load_sites
 from .ledger import verify
 from .llm import Narrator
 from .models import DisposalSite, Facility, SensorReading
 from .pipeline import run_pipeline
+from .scope import hide_prices, scope_disposals, scope_items, scope_passports
 from .numbers import js_round, round_to
 from .store import load_seed, make_store
 
@@ -57,12 +59,22 @@ class NewFacility(BaseModel):
 
 @app.get("/api/health")
 def health() -> dict[str, Any]:
-    return {"status": "ok", "llm": narrator.model_label, "store": type(store).__name__}
+    return {
+        "status": "ok",
+        "llm": narrator.model_label,
+        "store": type(store).__name__,
+        "auth": "required" if auth_required() else "off",
+    }
+
+
+@app.get("/api/me")
+def me(caller: Caller = Depends(get_caller)) -> dict[str, Any]:
+    return {"role": caller.role, "facility_id": caller.facility_id, "carrier_id": caller.carrier_id}
 
 
 @app.get("/api/facilities")
-def facilities() -> dict[str, Facility]:
-    return store.facilities()
+def facilities(caller: Caller = Depends(get_caller)) -> dict[str, Any]:
+    return {k: hide_prices(f.model_dump(mode="json"), caller) for k, f in store.facilities().items()}
 
 
 @app.get("/api/carriers")
@@ -71,7 +83,14 @@ def carriers():
 
 
 @app.post("/api/facilities/add")
-def add_facility(body: NewFacility) -> Facility:
+def add_facility(body: NewFacility, caller: Caller = Depends(get_caller)) -> Facility:
+    require(caller, "seller", "buyer", "admin")
+    if not caller.staff:
+        # Members register their own kind of site and cannot overwrite someone else's.
+        if body.role != caller.role:
+            raise HTTPException(403, f"A {caller.role} account can only register a {caller.role} facility")
+        if body.id and body.id.strip() in store.facilities():
+            raise HTTPException(409, f"Facility {body.id.strip()} already exists")
     rnd = random.randint(100, 999)
     lat, lon = CLUSTER_COORDS.get(body.cluster, CLUSTER_COORDS["Peenya"])
     seller = body.role != "buyer"
@@ -107,7 +126,10 @@ def add_facility(body: NewFacility) -> Facility:
 
 
 @app.post("/api/facilities/sensor")
-def sensor(body: SensorUpdate) -> Facility:
+def sensor(body: SensorUpdate, caller: Caller = Depends(get_caller)) -> Facility:
+    require(caller)
+    if not caller.staff and caller.facility_id != body.facility_id:
+        raise HTTPException(403, "You can only report sensor readings for your own facility")
     facility = store.facilities().get(body.facility_id)
     if facility is None:
         raise HTTPException(404, "Facility not found")
@@ -122,7 +144,8 @@ def sensor(body: SensorUpdate) -> Facility:
 
 
 @app.post("/api/facilities/{facility_id}/describe")
-async def describe(facility_id: str) -> dict[str, str]:
+async def describe(facility_id: str, caller: Caller = Depends(get_caller)) -> dict[str, str]:
+    require(caller)  # each call can spend LLM quota
     f = store.facilities().get(facility_id)
     if f is None:
         raise HTTPException(404, "Facility not found")
@@ -154,7 +177,8 @@ async def describe(facility_id: str) -> dict[str, str]:
 
 
 @app.post("/api/pipeline/run")
-async def run() -> dict[str, Any]:
+async def run(caller: Caller = Depends(get_caller)) -> dict[str, Any]:
+    require(caller, "regulator", "admin")
     result = await run_pipeline(store.facilities(), store.carriers(), store.taxonomy, store.passports(), narrator)
     store.append_passports(result.passports)
     items = [i.model_dump(mode="json") for i in result.items]
@@ -164,15 +188,15 @@ async def run() -> dict[str, Any]:
 
 
 @app.get("/api/pipeline/results")
-def results() -> list[dict[str, Any]]:
+def results(caller: Caller = Depends(get_caller)) -> list[dict[str, Any]]:
     latest = store.latest_run()
-    return latest["items"] if latest else []
+    return scope_items(latest["items"], caller) if latest else []
 
 
 @app.get("/api/disposals")
-def disposals() -> list[dict[str, Any]]:
+def disposals(caller: Caller = Depends(get_caller)) -> list[dict[str, Any]]:
     latest = store.latest_run()
-    return latest.get("disposals", []) if latest else []
+    return scope_disposals(latest.get("disposals", []), caller) if latest else []
 
 
 @app.get("/api/disposal-sites")
@@ -181,14 +205,19 @@ def disposal_sites() -> list[DisposalSite]:
 
 
 @app.get("/api/decisions")
-def decisions(limit: int = 200) -> list[dict[str, Any]]:
+def decisions(limit: int = 200, caller: Caller = Depends(get_caller)) -> list[dict[str, Any]]:
+    require(caller, "regulator", "admin")
     return store.decisions(limit)
 
 
 @app.get("/api/ledger")
-def ledger() -> dict[str, Any]:
+def ledger(caller: Caller = Depends(get_caller)) -> dict[str, Any]:
+    # The chain is verified whole, then cut down to the caller's own passports.
     chain = store.passports()
-    return {"passports": [p.model_dump() for p in chain], "verification": verify(chain).model_dump()}
+    return {
+        "passports": scope_passports([p.model_dump() for p in chain], caller),
+        "verification": verify(chain).model_dump(),
+    }
 
 
 @app.get("/api/ledger/verify")
@@ -197,6 +226,7 @@ def ledger_verify():
 
 
 @app.post("/api/reset")
-def reset() -> dict[str, str]:
+def reset(caller: Caller = Depends(get_caller)) -> dict[str, str]:
+    require(caller, "admin")
     store.reset()
     return {"status": "reset"}
