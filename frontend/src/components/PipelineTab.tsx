@@ -30,7 +30,8 @@ import {
 
 interface PipelineTabProps {
   results: PipelineItemResult[];
-  onRunPipeline: () => Promise<void>;
+  /** Left out when the signed-in user may not run matching. */
+  onRunPipeline?: () => Promise<void>;
   running: boolean;
   onSelectTranscript: (index: number) => void;
   onViewPassport: () => void;
@@ -118,6 +119,7 @@ export const PipelineTab: React.FC<PipelineTabProps> = ({
           </p>
 
           <div className="pt-3 flex justify-center">
+            {onRunPipeline ? (
             <button
               id="run-pipeline-btn"
               onClick={onRunPipeline}
@@ -127,6 +129,11 @@ export const PipelineTab: React.FC<PipelineTabProps> = ({
               <Play className={`w-5 h-5 ${running ? 'animate-spin' : ''}`} />
               <span>{running ? 'Finding Matches & Negotiating...' : 'Find Matches & Run Deals'}</span>
             </button>
+            ) : (
+              <p className="text-sm text-muted-foreground bg-muted/60 rounded-2xl px-5 py-3">
+                Matching is run by the KSPCB regulator or an admin. Deals your account is part of show up below after each run.
+              </p>
+            )}
           </div>
         </div>
 

@@ -9,7 +9,8 @@ export type Tab = 'workspace' | 'facilities' | 'fleet' | 'pipeline' | 'transcrip
 interface NavbarProps {
   activeTab: Tab;
   setActiveTab: (tab: Tab) => void;
-  onReset: () => void;
+  /** Left out when the signed-in user may not reset. */
+  onReset?: () => void;
   resetting: boolean;
   onOpenStandards?: () => void;
   onOpenLimitations?: () => void;
@@ -116,6 +117,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             ))}
           </nav>
 
+          {onReset && (
           <Button
             id="reset-state-btn"
             onClick={onReset}
@@ -127,6 +129,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             <RotateCcw className={cn('w-3.5 h-3.5', resetting && 'animate-spin text-orange-600 dark:text-orange-300')} />
           </Button>
+          )}
 
           {onToggleDarkMode && (
             <Button
