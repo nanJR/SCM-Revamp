@@ -47,8 +47,11 @@ async def negotiate_freight(
         )
 
     distance = route.distance_km
+    # A truck hired for a 100 m hop still costs a minimum trip. Without this the
+    # per-km budget explodes as distance -> 0 (0.11 km gave INR 1147/ton-km).
+    billable_km = max(distance, c.MIN_BILLABLE_KM)
     headroom_per_ton = buyer_ceiling_inr_per_ton - agreed_price_inr_per_ton
-    headroom_per_ton_km = headroom_per_ton / distance if distance > 0 else 0
+    headroom_per_ton_km = headroom_per_ton / billable_km
     floor = (
         round_to(carrier.rate_floor_inr_per_ton_km * c.BACKHAUL_DISCOUNT_FACTOR, 2)
         if is_backhaul
@@ -59,7 +62,7 @@ async def negotiate_freight(
     if ceiling <= floor:
         return _no_carrier(
             carrier,
-            f"Buyer's remaining budget headroom (INR {headroom_per_ton:.2f}/ton over {distance:g}km, approx. INR "
+            f"Buyer's remaining budget headroom (INR {headroom_per_ton:.2f}/ton over {billable_km:g} billable km, approx. INR "
             f"{headroom_per_ton_km:.2f}/ton-km) cannot meet {carrier.name}'s minimum freight rate (INR {floor:g}/ton-km).",
         )
 
@@ -108,7 +111,7 @@ async def negotiate_freight(
         vehicle_type=carrier.vehicle_type,
         outcome="DEAL",
         final_rate_inr_per_ton_km=rate,
-        total_freight_cost_inr=js_round(rate * distance * volume_tons + c.FIXED_DISPATCH_FEE_INR),
+        total_freight_cost_inr=js_round(rate * billable_km * volume_tons + c.FIXED_DISPATCH_FEE_INR),
         reason=None,
         rounds=rounds,
     )
