@@ -89,10 +89,10 @@ The Python port reproduces the old engine's decisions exactly (see `tests/test_p
 
 1. **Passport hashes ignored the deal.** `JSON.stringify(obj, Object.keys(obj).sort())` uses the key array as an allowlist at every level, so nested fields were never hashed. Editing a price inside a passport went unnoticed. The ledger now hashes canonical JSON (`ledger.canonical_json`), and `tests/test_ledger.py` covers this.
 2. **Consent dates in `dd/mm/yyyy` were not parsed.** These now parse correctly.
+3. **Freight rates blew up on very short trips.** The buyer's freight budget was divided by the raw distance, so the 0.11 km F04 to F10 hop priced at INR 1,147 per tonne-km. Trips under 10 km are now billed as a 10 km minimum trip (`MIN_BILLABLE_KM`).
 
 The following are still open, and are planned for Phase 2:
 
-- Freight rates blow up for very short trips. F04 to F10 is 0.11 km, which priced at 1,147 INR per tonne-km.
 - Hazardous waste is priced as if the buyer pays the generator. In practice the generator pays a gate fee.
 - The README described an alpha/beta concession curve that was never implemented.
 - The old Firestore rules were `allow read, write: if true`.

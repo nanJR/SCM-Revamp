@@ -14,6 +14,7 @@ CO2_EMISSION_KG_PER_TON_KM = 0.1
 POOLING_VOLUME_THRESHOLD_TONS = 3.0
 
 # Per-shipment overhead (loading, paperwork, minimum trip charge).
+MIN_BILLABLE_KM = 10.0  # trucks bill a minimum trip; shorter hops are priced as 10 km
 FIXED_DISPATCH_FEE_INR = 800
 
 # A carrier already running a route this pipeline run quotes its next job at a

@@ -12,6 +12,7 @@ from pathlib import Path
 
 import pytest
 
+from scm import constants as c
 from scm.llm import Narrator
 from scm.matchmaker import find_candidates, pool_micro_lots
 from scm.pipeline import run_pipeline
@@ -19,6 +20,19 @@ from scm.store import InMemoryStore
 
 GOLDEN = json.loads((Path(__file__).parent / "golden" / "legacy_pipeline.json").read_text())
 LEGACY_AS_OF = date(2026, 9, 12)  # the date hard-coded in the TS regulator
+
+# Deliberate departure from the legacy engine: trips shorter than
+# MIN_BILLABLE_KM are billed as a minimum trip (see tests/test_logistics.py).
+# Legacy priced the 0.11 km F04 -> F10 hop at INR 1147/ton-km. For those trips
+# the freight figures are left out of the comparison; everything else must match.
+FREIGHT_KEYS = ("freight_share_inr", "net_payout_inr")
+
+
+def _drop_freight(item: dict) -> dict:
+    members = item["pooled_members"]
+    if members:
+        members = [{k: v for k, v in m.items() if k not in FREIGHT_KEYS} for m in members]
+    return {**item, "freight": None, "pooled_members": members}
 
 
 @pytest.fixture
@@ -79,4 +93,6 @@ async def test_pipeline_matches_legacy(store):
             pooled=item.is_pooled_consignment,
             pooled_members=[p.model_dump() for p in item.pooled_members] if item.pooled_members else None,
         )
+        if want["distance_km"] < c.MIN_BILLABLE_KM:
+            got, want = _drop_freight(got), _drop_freight(want)
         assert got == want, f"{want['seller_id']} -> {want['buyer_id']}"
